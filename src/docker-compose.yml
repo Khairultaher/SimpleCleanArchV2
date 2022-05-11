@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  weatherforecastdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
+  weatherforecast.api:
+    image: ${DOCKER_REGISTRY-}weatherforecastapi
+    build:
+      context: .
+      dockerfile: Services/WeatherForecast/WeatherForecast.API/Dockerfile
+
+volumes:
+  postgres_data:
