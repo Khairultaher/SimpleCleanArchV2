@@ -1,2 +1,2 @@
-# SimpleCleanArchv2
-Simple CleanArch v2
+# SimpleCleanArchV2
+Simple CleanArch V2
