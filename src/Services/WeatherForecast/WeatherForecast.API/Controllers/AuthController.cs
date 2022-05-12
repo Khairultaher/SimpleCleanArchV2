@@ -83,13 +83,13 @@ namespace WeatherForecast.API.Controllers
                     user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(Constants.JwtSettings.RefreshTokenExpiryMinutes);
                     var res = await _userManager.UpdateAsync(user);
                 }
-
-
-
-                // implement cookie based login
-                var identity = new ClaimsIdentity(claims, "AppCookies");
-                ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync("AppCookies", claimsPrincipal);
+                else
+                {
+                    // implement cookie based login
+                    var identity = new ClaimsIdentity(claims, "AppCookies");
+                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync("AppCookies", claimsPrincipal);
+                }
 
                 return Ok(new { UserName = user.UserName, roles = userRoles, claims = userClaims, token = token });
             }

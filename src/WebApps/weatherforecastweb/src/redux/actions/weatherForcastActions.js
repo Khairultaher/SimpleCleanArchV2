@@ -32,16 +32,19 @@ export const getAllForcast =
           Authorization: `Bearer ${token}`,
         },
       };
+
       const { data } = await axios.get(link, config);
+      console.log(data);
 
       dispatch({
         type: GET_ALL_FORCAST_SUCCESS,
-        payload: data,
+        payload: data.items,
       });
     } catch (error) {
+      console.log(error);
       dispatch({
         type: GET_ALL_FORCAST_FAIL,
-        payload: error.response.data.message,
+        payload: error,
       });
     }
   };

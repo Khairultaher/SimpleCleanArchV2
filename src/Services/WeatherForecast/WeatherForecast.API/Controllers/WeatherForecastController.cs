@@ -58,7 +58,7 @@ namespace SimpleCleanArch.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(policy: "SysAdmin")]
+        [Authorize(policy: "Admin")]
         public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
             return await Mediator.Send(query);
@@ -68,14 +68,8 @@ namespace SimpleCleanArch.API.Controllers
         [Authorize(policy: "SysAdmin")]
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {
-            try
-            {
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.GetExceptions());
-            }
+
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpPut]
