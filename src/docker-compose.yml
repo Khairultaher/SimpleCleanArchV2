@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   weatherforecastdb:
-    image: mcr.microsoft.com/mssql/server:2017-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
 
   weatherforecast.api:
     image: ${DOCKER_REGISTRY-}weatherforecastapi
@@ -11,4 +11,4 @@ services:
       dockerfile: Services/WeatherForecast/WeatherForecast.API/Dockerfile
 
 volumes:
-  postgres_data:
+  sqlserver:

@@ -9,6 +9,8 @@ services:
     restart: always
     ports:
         - "1433:1433"
+    volumes:
+      - sqlserver:/var/opt/sqlserver/data
 
   weatherforecast.api:
     environment:
