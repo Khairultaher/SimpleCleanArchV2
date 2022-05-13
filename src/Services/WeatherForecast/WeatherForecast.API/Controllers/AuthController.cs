@@ -72,14 +72,14 @@ namespace WeatherForecast.API.Controllers
 
                 // create a new token with token helper and add our claim
                 JwtTokenModel token = null!;
-                if (Constants.UseJwtToken)
+                if (AppConstants.UseJwtToken)
                 {
 
                     token = _jwtTokenHelper.GetAccessToken(vm.UserName ?? "", claims);
 
                     // this need to be saved in database
                     user.RefreshToken = token.RefreshToken;
-                    user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(Constants.JwtSettings.RefreshTokenExpiryMinutes);
+                    user.RefreshTokenExpiryTime = DateTime.Now.AddMinutes(AppConstants.JwtSettings.RefreshTokenExpiryMinutes);
                     var res = await _userManager.UpdateAsync(user);
                 }
                 else

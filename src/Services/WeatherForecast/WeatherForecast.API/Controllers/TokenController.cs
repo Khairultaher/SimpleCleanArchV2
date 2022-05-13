@@ -31,7 +31,7 @@ namespace WeatherForecast.API.Controllers
                 return BadRequest("Invalid client request");
             string accessToken = tokenModel.AccessToken;
             string refreshToken = tokenModel.RefreshToken;
-            var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken, Constants.JwtSettings.SigningKey);
+            var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken, AppConstants.JwtSettings.SigningKey);
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
 
             var user = await _userManager.FindByNameAsync(username);

@@ -9,7 +9,8 @@ using WeatherForecast.Application.Features.WeatherForecast.Commands.Update;
 using WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeatherForecast;
 using WeatherForecast.Application.WeatherForecasts.Queries.GetWeatherForecast;
 using MassTransit;
-using Common.Models;
+using EventBus.Events;
+using System.Net;
 
 namespace SimpleCleanArch.API.Controllers
 {
@@ -49,7 +50,10 @@ namespace SimpleCleanArch.API.Controllers
             return Ok(await Mediator.Send(query));
         }
 
+        [Route("[action]")]
         [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         //[Authorize(policy: "SysAdmin")]
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeatherForecast.Application.Constants
 {
-    public static class Constants
+    public static class AppConstants
     {
         public static string BaseUrl = "";
         public static string DateFormat = "yyyy-MM-dd";
@@ -34,11 +34,6 @@ namespace WeatherForecast.Application.Constants
             public static string SigningKey = "localhostWith@strongKey";
             public static int TokenTimeoutMinutes = 5;
             public static int RefreshTokenExpiryMinutes = 60;
-        }
-
-        public static class RabbitMQSettings
-        {
-            public static string Host = "localhost";
         }
 
         public static class ServiceSettings

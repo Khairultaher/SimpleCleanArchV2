@@ -26,14 +26,14 @@ namespace WeatherForecast.Infrastructure.Security
             //    claims = claimList.ToArray();
             //}
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.JwtSettings.SigningKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.JwtSettings.SigningKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var expiration = TimeSpan.FromMinutes(Constants.JwtSettings.TokenTimeoutMinutes);
+            var expiration = TimeSpan.FromMinutes(AppConstants.JwtSettings.TokenTimeoutMinutes);
 
             var jwt = new JwtSecurityToken(
-                issuer: Constants.JwtSettings.Issuer,
-                audience: Constants.JwtSettings.Audience,
+                issuer: AppConstants.JwtSettings.Issuer,
+                audience: AppConstants.JwtSettings.Audience,
                 expires: DateTime.UtcNow.Add(expiration),
                 claims: claims,
                 signingCredentials: creds

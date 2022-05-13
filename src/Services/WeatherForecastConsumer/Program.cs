@@ -1,14 +1,25 @@
 ﻿
-using Common.Models;
+using EventBus.Common;
+using EventBus.Events;
 using MassTransit;
 using Newtonsoft.Json;
 
 
+//var builder = WebApplication.CreateBuilder(args);
+
 var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
 {
-    cfg.ReceiveEndpoint("WeatherForecast-Created-Event", e =>
+    //cfg.Host("localhost", "/", h =>
+    //{
+    //    h.Username("guest");
+    //    h.Password("guest");
+    //});
+    cfg.ReceiveEndpoint(EventBusConstants.WeatherForecastCreatedQueue, e =>
     {
         e.Consumer<WeatherForecastCreatedConsumer>();
+        e.PrefetchCount = 20;
+        e.UseMessageRetry(r => r.Interval(2, 100));
+
     });
 
 });

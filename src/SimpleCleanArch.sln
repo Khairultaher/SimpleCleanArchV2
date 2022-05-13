@@ -27,7 +27,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecastConsumer", "Services\WeatherForecastConsumer\WeatherForecastConsumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Models", "BuildingBlocks\Common.Models\Common.Models.csproj", "{9037CB50-0D35-4363-80DE-9174C4D1D985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "BuildingBlocks\Common.Models\EventBus.csproj", "{9037CB50-0D35-4363-80DE-9174C4D1D985}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

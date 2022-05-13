@@ -1,4 +1,5 @@
 ﻿
+using EventBus.Common;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -177,9 +178,22 @@ public static class DependencyInjection
         //services.AddTransient<ExceptionHandlingMiddleware>();
 
         #region MassTransit
-        services.AddMassTransit(x =>
+        //services.AddMassTransit(x =>
+        //{
+        //    x.UsingRabbitMq();
+        //});
+
+        services.AddMassTransit(config =>
         {
-            x.UsingRabbitMq();
+            config.UsingRabbitMq((ctx, cfg) =>
+            {
+                //cfg.Host("localhost", "/", h =>
+                //{
+                //    h.Username("guest");
+                //    h.Password("guest");
+                //});
+                //cfg.UseHealthCheck(ctx);
+            });
         });
 
         //services.AddMassTransitHostedService();
