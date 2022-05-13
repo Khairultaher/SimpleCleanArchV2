@@ -27,7 +27,7 @@ const PersistLogin = () => {
     };
     if (!auth.isAuthenticated) {
       console.log("verifyRefreshToken");
-      verifyRefreshToken();
+      //verifyRefreshToken();
     } else {
       setIsLoading(false);
     }

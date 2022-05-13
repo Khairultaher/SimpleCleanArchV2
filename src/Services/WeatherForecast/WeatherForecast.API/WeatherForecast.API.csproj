@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\..\Common.Models\Common.Models.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\Common.Models\Common.Models.csproj" />
 		<ProjectReference Include="..\WeatherForecast.Application\WeatherForecast.Application.csproj" />
 		<ProjectReference Include="..\WeatherForecast.Infrastucture\WeatherForecast.Infrastucture.csproj" />
 	</ItemGroup>

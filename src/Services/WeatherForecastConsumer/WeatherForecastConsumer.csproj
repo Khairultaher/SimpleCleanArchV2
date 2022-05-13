@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common.Models\Common.Models.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Common.Models\Common.Models.csproj" />
   </ItemGroup>
 
 </Project>

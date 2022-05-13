@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿
+using Common.Models;
 using MassTransit;
 using Newtonsoft.Json;
 
