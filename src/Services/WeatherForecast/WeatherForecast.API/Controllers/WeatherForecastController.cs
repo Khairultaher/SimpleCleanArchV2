@@ -54,6 +54,8 @@ namespace SimpleCleanArch.API.Controllers
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {
             var res = await Mediator.Send(command);
+
+            //Masstransit...
             _publishEndpoint?.Publish(new WeatherForecastCreated(command.TemperatureC, command.Summary, DateTime.UtcNow));
 
             return Ok(res);
