@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using WeatherForecast.Application.Common.Interfaces;
-using WeatherForecast.Application.Common.Models;
+using WeatherForecast.Application.Models;
+using WeatherForecast.Application.Services;
 using WeatherForecast.Domain.Common;
 
 namespace WeatherForecast.Infrastructure.Services;

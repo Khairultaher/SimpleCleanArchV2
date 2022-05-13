@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WeatherForecast.API.ViewModels;
-using WeatherForecast.Application.Common.Constants;
-using WeatherForecast.Application.Common.Extensions;
-using WeatherForecast.Application.Common.Interfaces;
-using WeatherForecast.Application.Common.Models;
-using WeatherForecast.Infrastructure.Identity;
 using System.Security.Claims;
+using WeatherForecast.API.ViewModels;
+using WeatherForecast.Application.Constants;
+using WeatherForecast.Application.Extensions;
+using WeatherForecast.Application.Models;
+using WeatherForecast.Application.Interfaces.Security;
+using WeatherForecast.Infrastructure.Identity;
 
 namespace WeatherForecast.API.Controllers
 {

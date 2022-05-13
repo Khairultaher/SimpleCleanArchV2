@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using WeatherForecast.Application.Common.Exceptions;
-using WeatherForecast.Application.Common.Extensions;
-using WeatherForecast.Domain.Exceptions;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
+using WeatherForecast.Application.Extensions;
+using WeatherForecast.Domain.Exceptions;
 using ApplicationException = WeatherForecast.Domain.Exceptions.ApplicationException;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
+using ValidationException = WeatherForecast.Application.Exceptions.ValidationException;
 
 namespace WeatherForecast.Infrastructure.Middlewares;
 
@@ -54,7 +52,7 @@ public sealed class ExceptionHandlingMiddleware : IMiddleware
         exception switch
         {
             BadRequestException => StatusCodes.Status400BadRequest,
-            Application.Common.Exceptions.NotFoundException => StatusCodes.Status404NotFound,
+            Application.Exceptions.NotFoundException => StatusCodes.Status404NotFound,
             ValidationException => StatusCodes.Status422UnprocessableEntity,
             _ => StatusCodes.Status500InternalServerError
         };

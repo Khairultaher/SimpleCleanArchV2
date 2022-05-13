@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using WeatherForecast.Application.Common.Interfaces;
+using WeatherForecast.Application.Common;
 
 namespace WeatherForecast.API.Filters
 {

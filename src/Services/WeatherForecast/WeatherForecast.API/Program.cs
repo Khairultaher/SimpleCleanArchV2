@@ -1,9 +1,10 @@
 using WeatherForecast.API.Services;
 using WeatherForecast.Application;
-using WeatherForecast.Application.Common;
-using WeatherForecast.Application.Common.Constants;
+using WeatherForecast.Application.Constants;
+using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure;
 using WeatherForecast.Infrastructure.Middlewares;
+using static WeatherForecast.Application.Constants.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ IConfiguration configuration = builder.Configuration;
 Constants.JwtSettings.Issuer = configuration["JwtSettings:Issuer"];
 Constants.JwtSettings.Audience = configuration["JwtSettings:Audience"];
 Constants.JwtSettings.SigningKey = configuration["JwtSettings:SigningKey"];
+Constants.RabbitMQSettings.Host = configuration["RabbitMQSettings:Host"];
+Constants.ServiceSettings.ServiceName = configuration["ServiceSettings:ServiceName"];
 #endregion
 
 

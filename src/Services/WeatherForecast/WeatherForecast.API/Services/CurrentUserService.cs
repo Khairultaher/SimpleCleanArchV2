@@ -1,5 +1,6 @@
 ﻿using WeatherForecast.Application.Common;
 using System.Security.Claims;
+using WeatherForecast.Application.Services;
 
 namespace WeatherForecast.API.Services
 {

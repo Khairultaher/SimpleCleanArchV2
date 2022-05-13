@@ -2,16 +2,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using WeatherForecast.Application.Common;
-using WeatherForecast.Application.Common.Interfaces;
+using System.Reflection;
+using WeatherForecast.Application.Interfaces.Persistence;
+using WeatherForecast.Application.Services;
 using WeatherForecast.Domain.Common;
 using WeatherForecast.Domain.Entities;
 using WeatherForecast.Infrastructure.Identity;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Threading;
-using System.Linq;
-using System;
 
 namespace WeatherForecast.Infrastructure.Persistence;
 

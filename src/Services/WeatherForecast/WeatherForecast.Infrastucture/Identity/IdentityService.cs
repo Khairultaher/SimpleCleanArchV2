@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
-using WeatherForecast.Application.Common.Interfaces;
-using WeatherForecast.Application.Common.Models;
+using WeatherForecast.Application.Models;
+using WeatherForecast.Application.Interfaces.Identity;
 
 namespace WeatherForecast.Infrastructure.Identity
 {

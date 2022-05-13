@@ -1,14 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
-using WeatherForecast.Application.Common.Constants;
-using WeatherForecast.Application.Common.Interfaces;
-using WeatherForecast.Application.Common.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Collections.Generic;
-using System;
+using WeatherForecast.Application.Constants;
+using WeatherForecast.Application.Models;
+using WeatherForecast.Application.Interfaces.Security;
 
 namespace WeatherForecast.Infrastructure.Security
 {

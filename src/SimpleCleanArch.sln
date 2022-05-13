@@ -25,6 +25,10 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WeatherForecastWeb", "WebAp
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{941E3218-F438-495E-8F90-5BE5CA9C59A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecastConsumer", "Services\WeatherForecastConsumer\WeatherForecastConsumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Models", "..\Common.Models\Common.Models.csproj", "{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{941E3218-F438-495E-8F90-5BE5CA9C59A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{941E3218-F438-495E-8F90-5BE5CA9C59A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{941E3218-F438-495E-8F90-5BE5CA9C59A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03184C3E-0DA6-4EAC-B393-C993DD1E368B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03184C3E-0DA6-4EAC-B393-C993DD1E368B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03184C3E-0DA6-4EAC-B393-C993DD1E368B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03184C3E-0DA6-4EAC-B393-C993DD1E368B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +80,8 @@ Global
 		{ABCD11CE-8CF0-474D-B974-F683C5ED4C6E} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
 		{CE37D66E-42C0-4D1B-A91A-7300AAE48844} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
 		{51020D12-922B-454E-9AF9-C14D9F0DF477} = {F5038296-0C29-43EB-A15C-468F575A4CEC}
+		{03184C3E-0DA6-4EAC-B393-C993DD1E368B} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
+		{A3AACAF1-00ED-4BC9-AB22-1A3E6A6550B5} = {CDEE0992-0A87-46D9-9422-1AC86F590B82}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CCB2891-D429-44F4-96D9-CBD17CF29346}

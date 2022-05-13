@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   weatherforecastdb:
     image: mcr.microsoft.com/mssql/server:2019-latest
 
@@ -12,3 +15,4 @@ services:
 
 volumes:
   sqlserver:
+  rabbitmq:

@@ -1,20 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using WeatherForecast.Application.Common.Constants;
-using WeatherForecast.Application.Common.Interfaces;
+using System.Reflection;
+using WeatherForecast.Application.Constants;
+using WeatherForecast.Application.Interfaces.Identity;
+using WeatherForecast.Application.Interfaces.Persistence;
+using WeatherForecast.Application.Interfaces.Security;
+using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure.Identity;
-using WeatherForecast.Infrastructure.Middlewares;
-using System.Text;
 using WeatherForecast.Infrastructure.Persistence;
-using WeatherForecast.Infrastructure.Services;
-using System;
 using WeatherForecast.Infrastructure.Security;
+using WeatherForecast.Infrastructure.Services;
 
 namespace WeatherForecast.Infrastructure;
 
@@ -176,6 +175,32 @@ public static class DependencyInjection
         #endregion
 
         //services.AddTransient<ExceptionHandlingMiddleware>();
+
+        #region MassTransit
+        services.AddMassTransit(x =>
+        {
+            x.UsingRabbitMq();
+        });
+
+        //services.AddMassTransitHostedService();
+
+        // OPTIONAL, but can be used to configure the bus options
+        services.AddOptions<MassTransitHostOptions>()
+            .Configure(options =>
+            {
+                // if specified, waits until the bus is started before
+                // returning from IHostedService.StartAsync
+                // default is false
+                options.WaitUntilStarted = true;
+
+                // if specified, limits the wait time when starting the bus
+                options.StartTimeout = TimeSpan.FromSeconds(10);
+
+                // if specified, limits the wait time when stopping the bus
+                options.StopTimeout = TimeSpan.FromSeconds(30);
+            });
+        #endregion
+
 
         return services;
     }
