@@ -16,3 +16,8 @@ services:
 volumes:
   sqlserver:
   rabbitmq:
+
+#networks:
+#  custom-default-network:
+#    external: false
+#    name: custom-default-network
