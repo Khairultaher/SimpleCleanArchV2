@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Infrastuctu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{CDEE0992-0A87-46D9-9422-1AC86F590B82}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WeatherForecast.Web", "WebApps\WeatherForecast.Web\WeatherForecast.Web.esproj", "{51020D12-922B-454E-9AF9-C14D9F0DF477}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WeatherForecastWeb", "WebApps\WeatherForecastWeb\WeatherForecastWeb.esproj", "{51020D12-922B-454E-9AF9-C14D9F0DF477}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{941E3218-F438-495E-8F90-5BE5CA9C59A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Consumer", "Services\WeatherForecast.Consumer\WeatherForecast.Consumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecastConsumer", "Services\WeatherForecastConsumer\WeatherForecastConsumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "BuildingBlocks\Common.Models\EventBus.csproj", "{9037CB50-0D35-4363-80DE-9174C4D1D985}"
 EndProject
