@@ -15,7 +15,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Create
     public class CreateWeatherForecastCommand : IRequest<int>
     {
         public int TemperatureC { get; set; }
-
+        public string? Location { get; set; }
         public string? Summary { get; set; }
     }
 
@@ -31,7 +31,9 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Create
             var entity = new WeatherForecastEntity
             {
                 TemperatureC = request.TemperatureC,
+                Location = request.Location,
                 CreatedAt = DateTime.UtcNow,
+                Date = DateTime.UtcNow, 
                 Summary = request.Summary,
             };
 

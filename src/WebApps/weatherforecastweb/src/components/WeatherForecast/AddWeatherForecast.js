@@ -20,6 +20,7 @@ import Loader from "../layout/Loader";
 
 const AddWeatherForecast = (props) => {
   const [temperatureC, setTemperatureC] = useState(0);
+  const [location, setLocation] = useState("");
   const [summary, setSummary] = useState("");
 
   const alert = useAlert();
@@ -32,6 +33,7 @@ const AddWeatherForecast = (props) => {
   useEffect(() => {
     if (props.show) {
       setTemperatureC(props.data.temperatureC);
+      setLocation(props.data.location);
       setSummary(props.data.summary);
       showModal();
     }
@@ -52,6 +54,7 @@ const AddWeatherForecast = (props) => {
 
     setTemperatureC(0);
     setSummary(null);
+    setLocation(null);
 
     bsModal.hide();
     props.onCloseModalClick();
@@ -62,6 +65,7 @@ const AddWeatherForecast = (props) => {
     formData.set("id", props.data.id);
     formData.set("temperatureC", temperatureC);
     formData.set("summary", summary);
+    formData.set("location", location);
 
     if (!props.data.id) {
       await dispatch(addForcast(formData));
@@ -94,6 +98,17 @@ const AddWeatherForecast = (props) => {
           </div>
           <div className="modal-body">
             <form className="">
+              <div className="form-group">
+                <label htmlFor="location" className="col-form-label">
+                  Location:
+                </label>
+                <input
+                  className="form-control"
+                  id="location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="tempc" className="col-form-label">
                   Temp. (C):

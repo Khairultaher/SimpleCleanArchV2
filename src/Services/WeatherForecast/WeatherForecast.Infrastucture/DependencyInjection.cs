@@ -1,10 +1,12 @@
 ﻿
 using EventBus.Common;
+using EventBus.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RabbitMQ.Client;
 using System.Reflection;
 using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Interfaces.Identity;
@@ -178,41 +180,38 @@ public static class DependencyInjection
         //services.AddTransient<ExceptionHandlingMiddleware>();
 
         #region MassTransit
-        //services.AddMassTransit(x =>
-        //{
-        //    x.UsingRabbitMq();
-        //});
-
         services.AddMassTransit(config =>
         {
             config.UsingRabbitMq((ctx, cfg) =>
             {
-                //cfg.Host("localhost", "/", h =>
-                //{
-                //    h.Username("guest");
-                //    h.Password("guest");
-                //});
-                //cfg.UseHealthCheck(ctx);
+                cfg.Send<WeatherForecastEvent>(x =>
+                {
+                    // use customerType for the routing key
+                    x.UseRoutingKeyFormatter(context => context.Message.EventType?.ToString()); // route by provider (email or fax)
+
+                    // multiple conventions can be set, in this case also CorrelationId
+                    //x.UseCorrelationId(context => context.Message.TransactionId);
+                });
+                cfg.Message<WeatherForecastEvent>(x => x.SetEntityName(EventBusConstants.Exchages.WeatherForecastExchange));
+                cfg.Publish<WeatherForecastEvent>(x => x.ExchangeType = ExchangeType.Direct);
             });
         });
 
-        //services.AddMassTransitHostedService();
-
         // OPTIONAL, but can be used to configure the bus options
-        services.AddOptions<MassTransitHostOptions>()
-            .Configure(options =>
-            {
-                // if specified, waits until the bus is started before
-                // returning from IHostedService.StartAsync
-                // default is false
-                options.WaitUntilStarted = true;
+        //services.AddOptions<MassTransitHostOptions>()
+        //    .Configure(options =>
+        //    {
+        //        // if specified, waits until the bus is started before
+        //        // returning from IHostedService.StartAsync
+        //        // default is false
+        //        options.WaitUntilStarted = true;
 
-                // if specified, limits the wait time when starting the bus
-                options.StartTimeout = TimeSpan.FromSeconds(10);
+        //        // if specified, limits the wait time when starting the bus
+        //        options.StartTimeout = TimeSpan.FromSeconds(10);
 
-                // if specified, limits the wait time when stopping the bus
-                options.StopTimeout = TimeSpan.FromSeconds(30);
-            });
+        //        // if specified, limits the wait time when stopping the bus
+        //        options.StopTimeout = TimeSpan.FromSeconds(30);
+        //    });
         #endregion
 
 

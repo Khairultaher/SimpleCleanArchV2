@@ -8,6 +8,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Update
     {
         public int Id { get; set; }
         public int TemperatureC { get; set; }
+        public string? Location { get; set; }
         public string? Summary { get; set; }
     }
 
@@ -29,6 +30,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Update
             }
 
             entity.TemperatureC = request.TemperatureC;
+            entity.Location = request.Location;
             entity.Summary = request.Summary;
 
 

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace EventBus.Events
 {
-    public record WeatherForecastCreated(int TemperatureC, string? Summary, DateTime CreatedDate);
+    public record WeatherForecastEvent(int TemperatureC, string? Location, string? Summary, DateTime CreatedDate, string? EventType);
 }

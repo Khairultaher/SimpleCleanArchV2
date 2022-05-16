@@ -11,6 +11,7 @@ using WeatherForecast.Application.WeatherForecasts.Queries.GetWeatherForecast;
 using MassTransit;
 using EventBus.Events;
 using System.Net;
+using EventBus.Common;
 
 namespace SimpleCleanArch.API.Controllers
 {
@@ -50,26 +51,35 @@ namespace SimpleCleanArch.API.Controllers
             return Ok(await Mediator.Send(query));
         }
 
-        [Route("[action]")]
+        //[Route("[action]")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //[Authorize(policy: "SysAdmin")]
+        //[Authorize(policy: "Admin")]
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {
-            var res = await Mediator.Send(command);
+            response.Data = await Mediator.Send(command);
+            response.Message = "Item Added successfully";
 
             //Masstransit...
-            _publishEndpoint?.Publish(new WeatherForecastCreated(command.TemperatureC, command.Summary, DateTime.UtcNow));
+            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.CREATED.ToString()));
 
-            return Ok(res);
+            return Ok(response);
         }
 
+        //[Route("[action]")]
         [HttpPut]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        //[Authorize(policy: "Admin")]
         public async Task<ActionResult> Update([FromForm] UpdateWeatherForecastCommand command)
         {
-            await Mediator.Send(command);
+            response.Data = await Mediator.Send(command);
             response.Message = "Item updated successfully";
+
+            //Masstransit...
+            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.UPDATED.ToString()));
+
             return Ok(response);
         }
 

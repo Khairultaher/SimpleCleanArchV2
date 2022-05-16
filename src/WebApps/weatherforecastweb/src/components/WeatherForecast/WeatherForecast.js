@@ -2,6 +2,7 @@ import React, { Component, Fragment, useState, useEffect } from "react";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import AddWeatherForecast from "./AddWeatherForecast";
+import { format } from "date-fns";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
@@ -127,6 +128,7 @@ const WeatherForecast = ({}) => {
                     <thead>
                       <tr>
                         <th>Date</th>
+                        <th>Location</th>
                         <th>Temp. (C)</th>
                         <th>Temp. (F)</th>
                         <th>Summary</th>
@@ -136,7 +138,10 @@ const WeatherForecast = ({}) => {
                     <tbody>
                       {forecasts.map((forecast) => (
                         <tr key={forecast.id}>
-                          <td>{forecast.date}</td>
+                          <td>
+                            {format(new Date(forecast.date), "yyyy-MM-dd")}
+                          </td>
+                          <td>{forecast.location}</td>
                           <td>{forecast.temperatureC}</td>
                           <td>{forecast.temperatureF}</td>
                           <td>{forecast.summary}</td>
@@ -148,6 +153,7 @@ const WeatherForecast = ({}) => {
                                   showModalDialog({
                                     id: forecast.id,
                                     temperatureC: forecast.temperatureC,
+                                    location: forecast.location,
                                     summary: forecast.summary,
                                   });
                                 }}
