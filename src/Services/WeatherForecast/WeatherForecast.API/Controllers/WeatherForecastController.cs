@@ -25,27 +25,29 @@ namespace SimpleCleanArch.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        readonly IPublishEndpoint _publishEndpoint;
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IPublishEndpoint publishEndpoint)
+        //readonly IPublishEndpoint _publishEndpoint;
+        public WeatherForecastController(ILogger<WeatherForecastController> logger
+            //, IPublishEndpoint publishEndpoint
+            )
         {
             _logger = logger;
-            _publishEndpoint = publishEndpoint;
+            //_publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
         [Route("GetWeatherForecast")]
         //[Authorize(Roles = "Admin")]
-        [Authorize(policy: "AccountsAdmin")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
+        //[Authorize(policy: "AccountsAdmin")]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesDefaultResponseType]
         public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
         [HttpGet]
-        //[Authorize(policy: "Admin")]
+        [Authorize(policy: "Admin")]
         public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
             return Ok(await Mediator.Send(query));
@@ -55,14 +57,14 @@ namespace SimpleCleanArch.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //[Authorize(policy: "Admin")]
+        [Authorize(policy: "Admin")]
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {
             response.Data = await Mediator.Send(command);
             response.Message = "Item Added successfully";
 
             //Masstransit...
-            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.CREATED.ToString()));
+            //_publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.CREATED.ToString()));
 
             return Ok(response);
         }
@@ -78,7 +80,7 @@ namespace SimpleCleanArch.API.Controllers
             response.Message = "Item updated successfully";
 
             //Masstransit...
-            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.UPDATED.ToString()));
+            //_publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.UPDATED.ToString()));
 
             return Ok(response);
         }

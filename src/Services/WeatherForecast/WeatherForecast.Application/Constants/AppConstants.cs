@@ -26,7 +26,7 @@ namespace WeatherForecast.Application.Constants
         }
 
 
-        public static bool UseJwtToken = true;
+        public static bool UseJwtToken = false;
         public static class JwtSettings
         {
             public static string Issuer = "localhost";

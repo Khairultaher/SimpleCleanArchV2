@@ -25,7 +25,7 @@ namespace WeatherForecast.Infrastructure.Identity
 
         public async Task<string> GetUserNameAsync(string userId)
         {
-            var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
             return user.UserName;
         }

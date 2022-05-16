@@ -27,7 +27,8 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
 
         if (!string.IsNullOrEmpty(userId))
         {
-            userName = await _identityService.GetUserNameAsync(userId);
+            //userName = await _identityService.GetUserNameAsync(userId);
+            userName = _currentUserService.UserName ?? string.Empty;
         }
 
         _logger.LogInformation("CleanArchitecture Request: {Name} {@UserId} {@UserName} {@Request}",

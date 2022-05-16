@@ -180,22 +180,22 @@ public static class DependencyInjection
         //services.AddTransient<ExceptionHandlingMiddleware>();
 
         #region MassTransit
-        services.AddMassTransit(config =>
-        {
-            config.UsingRabbitMq((ctx, cfg) =>
-            {
-                cfg.Send<WeatherForecastEvent>(x =>
-                {
-                    // use customerType for the routing key
-                    x.UseRoutingKeyFormatter(context => context.Message.EventType?.ToString()); // route by provider (email or fax)
+        //services.AddMassTransit(config =>
+        //{
+        //    config.UsingRabbitMq((ctx, cfg) =>
+        //    {
+        //        cfg.Send<WeatherForecastEvent>(x =>
+        //        {
+        //            // use customerType for the routing key
+        //            x.UseRoutingKeyFormatter(context => context.Message.EventType?.ToString()); // route by provider (email or fax)
 
-                    // multiple conventions can be set, in this case also CorrelationId
-                    //x.UseCorrelationId(context => context.Message.TransactionId);
-                });
-                cfg.Message<WeatherForecastEvent>(x => x.SetEntityName(EventBusConstants.Exchages.WeatherForecastExchange));
-                cfg.Publish<WeatherForecastEvent>(x => x.ExchangeType = ExchangeType.Direct);
-            });
-        });
+        //            // multiple conventions can be set, in this case also CorrelationId
+        //            //x.UseCorrelationId(context => context.Message.TransactionId);
+        //        });
+        //        cfg.Message<WeatherForecastEvent>(x => x.SetEntityName(EventBusConstants.Exchages.WeatherForecastExchange));
+        //        cfg.Publish<WeatherForecastEvent>(x => x.ExchangeType = ExchangeType.Direct);
+        //    });
+        //});
 
         // OPTIONAL, but can be used to configure the bus options
         //services.AddOptions<MassTransitHostOptions>()

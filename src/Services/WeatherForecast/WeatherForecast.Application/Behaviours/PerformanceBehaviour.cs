@@ -45,7 +45,8 @@ public class PerformanceBehaviour<TRequest, TResponse>
 
             if (!string.IsNullOrEmpty(userId))
             {
-                userName = await _identityService.GetUserNameAsync(userId);
+                //userName = await _identityService.GetUserNameAsync(userId);
+                userName = _currentUserService.UserName ?? string.Empty;
             }
 
             _logger.LogWarning("CleanArchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",

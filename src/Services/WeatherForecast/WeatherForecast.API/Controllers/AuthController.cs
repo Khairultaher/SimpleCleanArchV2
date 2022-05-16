@@ -52,7 +52,7 @@ namespace WeatherForecast.API.Controllers
                 }
 
                 var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, vm.UserName ?? "")); // NameIdentifier is the ID for an object
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id ?? "")); // NameIdentifier is the ID for an object
                 claims.Add(new Claim(ClaimTypes.Name, vm.UserName ?? "")); //  Name is just that a name       
 
                 var userRoles = await _userManager.GetRolesAsync(user);

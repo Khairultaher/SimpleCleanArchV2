@@ -29,12 +29,11 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
         }
         public async Task<PaginatedList<WeatherForecastModel>> Handle(GetWeatherForecastWithPaginationQuery request, CancellationToken cancellationToken)
         {
+
             return await _context.WeatherForecasts
-                    .OrderByDescending(x => x.Id)
-                    .ProjectTo<WeatherForecastModel>(_mapper.ConfigurationProvider)
-                    .PaginatedListAsync(request.PageNumber, request.PageSize);
-
-
+            .OrderByDescending(x => x.Id)
+            .ProjectTo<WeatherForecastModel>(_mapper.ConfigurationProvider)
+            .PaginatedListAsync(request.PageNumber, request.PageSize);
         }
     }
 }

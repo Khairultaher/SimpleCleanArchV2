@@ -4,6 +4,8 @@ services:
   rabbitmq:
     container_name: rabbitmq
     restart: always
+    networks:
+      - custom-default-network
     ports:
         - "5672:5672"
         - "15672:15672"
@@ -16,18 +18,21 @@ services:
         SA_PASSWORD: "SwN12345678"
         ACCEPT_EULA: "Y"
     restart: always
+    networks:
+      - custom-default-network
     ports:
         - "1433:1433"
     volumes:
-      - sqlserver:/var/opt/sqlserver/data
+      - sqlserver:/var/opt/mssql/data
 
   weatherforecast.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=weatherforecastdb,1433;Database=WeatherForecastDb;User Id=sa;Password=SwN12345678"   
+      - "ConnectionStrings:DefaultConnection=Server=sql-srv19,1433;Database=WeatherForecastDb;User Id=sa;Password=SA@12345"   
       - ASPNETCORE_URLS=https://+:443;http://+:80
     depends_on:
       - weatherforecastdb
+      - rabbitmq
     ports:
       - "5001:80"
       - "7443:443"
