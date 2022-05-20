@@ -1,4 +1,9 @@
 using EventBus.Common;
+using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WeatherForecast.API.Services;
 using WeatherForecast.Application;
 using WeatherForecast.Application.Constants;
@@ -33,12 +38,41 @@ builder.Services.AddInfrastructure(configuration);
 builder.Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
-//builder.Services.AddControllers(options =>
-//    options.Filters.Add<ApiExceptionFilterAttribute>())
-//        .AddFluentValidation(x => x.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers().AddFluentValidation(c =>
+{
+    c.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    // Optionally set validator factory if you have problems with scope resolve inside validators.
+    c.ValidatorFactoryType = typeof(HttpContextServiceProviderValidatorFactory);
+});
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clinical Trial Subject", Version = "v1" });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+builder.Services.AddFluentValidationRulesToSwagger();
 
 //services cors
 builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
@@ -52,8 +86,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(s => s.SerializeAsV2 = true);
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CTS V1");
+        c.DefaultModelsExpandDepth(-1);
+
+    });
 }
 
 // custom middleware
@@ -64,15 +103,14 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapGet("/", async context =>
-//    {
-//        await context.Response.WriteAsync("Yes, I am on...");
-//    });
-//});
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    //    endpoints.MapGet("/", async context =>
+    //    {
+    //        await context.Response.WriteAsync("Yes, I am on...");
+    //    });
+});
 
 app.Run();

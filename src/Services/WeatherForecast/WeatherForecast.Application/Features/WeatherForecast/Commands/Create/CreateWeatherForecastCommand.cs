@@ -1,14 +1,7 @@
 ﻿using MediatR;
-using WeatherForecast.Application.Interfaces;
+using WeatherForecast.Application.Interfaces.Persistence;
 using WeatherForecast.Domain.Entities;
 using WeatherForecast.Domain.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-using WeatherForecast.Application.Interfaces.Persistence;
 
 namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Create
 {
@@ -33,7 +26,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Create
                 TemperatureC = request.TemperatureC,
                 Location = request.Location,
                 CreatedAt = DateTime.UtcNow,
-                Date = DateTime.UtcNow, 
+                Date = DateTime.UtcNow,
                 Summary = request.Summary,
             };
 
