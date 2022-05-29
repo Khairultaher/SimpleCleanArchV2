@@ -25,21 +25,20 @@ namespace SimpleCleanArch.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        //readonly IPublishEndpoint _publishEndpoint;
+        readonly IPublishEndpoint _publishEndpoint;
         public WeatherForecastController(ILogger<WeatherForecastController> logger
-            //, IPublishEndpoint publishEndpoint
+            , IPublishEndpoint publishEndpoint
             )
         {
             _logger = logger;
-            //_publishEndpoint = publishEndpoint;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
         [Route("GetWeatherForecast")]
         //[Authorize(Roles = "Admin")]
         //[Authorize(policy: "AccountsAdmin")]
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
         public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
@@ -47,51 +46,54 @@ namespace SimpleCleanArch.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(policy: "Admin")]
+        //[Authorize(policy: "Admin")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
         public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
 
-        //[Route("[action]")]
         [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [Authorize(policy: "Admin")]
+        //[Authorize(policy: "Admin")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
         {
             response.Data = await Mediator.Send(command);
             response.Message = "Item Added successfully";
 
             //Masstransit...
-            //_publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.CREATED.ToString()));
+            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.CREATED.ToString()));
 
             return Ok(response);
         }
 
-        //[Route("[action]")]
+
         [HttpPut]
-        [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         //[Authorize(policy: "Admin")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
         public async Task<ActionResult> Update([FromForm] UpdateWeatherForecastCommand command)
         {
             response.Data = await Mediator.Send(command);
             response.Message = "Item updated successfully";
 
             //Masstransit...
-            //_publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.UPDATED.ToString()));
+            _publishEndpoint?.Publish(new WeatherForecastEvent(command.TemperatureC, command.Location, command.Summary, DateTime.UtcNow, EventBusEnums.UPDATED.ToString()));
 
             return Ok(response);
         }
 
-        //[HttpDelete("{id}")]
+
         [HttpDelete]
+        //[Authorize(policy: "Admin")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesDefaultResponseType]
         public async Task<IActionResult> Delete([FromQuery] int id)
         {
-            await Mediator.Send(new DeleteWeatherForecastCommand { Id = id });
-            response.Message = "Item deleted successfully";
-            return Ok(response);
+
+            return Ok(await Mediator.Send(new DeleteWeatherForecastCommand { Id = id }));
 
         }
     }

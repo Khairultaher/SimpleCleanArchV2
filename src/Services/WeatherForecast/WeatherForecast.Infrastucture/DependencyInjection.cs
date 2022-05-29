@@ -1,5 +1,4 @@
-﻿
-using EventBus.Common;
+﻿using EventBus.Common;
 using EventBus.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
-using System.Reflection;
-using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Interfaces.Identity;
 using WeatherForecast.Application.Interfaces.Persistence;
 using WeatherForecast.Application.Interfaces.Security;
@@ -57,11 +54,10 @@ public static class DependencyInjection
         services.AddTransient<IJwtTokenHelper, JwtTokenHelper>();
         //services.AddTransient<ICsvFileBuilder, CsvFileBuilder>();
 
-
-
         //hosted services
         services.AddHostedService<DatabaseSeedingService>();
-        services.AddTransient<ApplicationDbContextSeed>();
+        // obsolete 
+        //services.AddTransient<ApplicationDbContextSeed>();
 
         #region Configure Session
         services.AddSession(options =>
@@ -180,23 +176,24 @@ public static class DependencyInjection
         //services.AddTransient<ExceptionHandlingMiddleware>();
 
         #region MassTransit
-        //services.AddMassTransit(config =>
-        //{
-        //    config.UsingRabbitMq((ctx, cfg) =>
-        //    {
-        //        cfg.Send<WeatherForecastEvent>(x =>
-        //        {
-        //            // use customerType for the routing key
-        //            x.UseRoutingKeyFormatter(context => context.Message.EventType?.ToString()); // route by provider (email or fax)
+        services.AddMassTransit(config =>
+        {
+            config.UsingRabbitMq((ctx, cfg) =>
+            {
+                cfg.Send<WeatherForecastEvent>(x =>
+                {
+                    // use customeType for the routing/binding key
+                    x.UseRoutingKeyFormatter(context => context.Message.EventType?.ToString()); // route by provider (CREATE or UPDATE)
 
-        //            // multiple conventions can be set, in this case also CorrelationId
-        //            //x.UseCorrelationId(context => context.Message.TransactionId);
-        //        });
-        //        cfg.Message<WeatherForecastEvent>(x => x.SetEntityName(EventBusConstants.Exchages.WeatherForecastExchange));
-        //        cfg.Publish<WeatherForecastEvent>(x => x.ExchangeType = ExchangeType.Direct);
-        //    });
-        //});
+                    // multiple conventions can be set, in this case also CorrelationId
+                    //x.UseCorrelationId(context => context.Message.TransactionId);
+                });
+                cfg.Message<WeatherForecastEvent>(x => x.SetEntityName(EventBusConstants.Exchages.WeatherForecastExchange));
+                cfg.Publish<WeatherForecastEvent>(x => x.ExchangeType = ExchangeType.Direct);
+            });
+        });
 
+        #region OPTIONAL
         // OPTIONAL, but can be used to configure the bus options
         //services.AddOptions<MassTransitHostOptions>()
         //    .Configure(options =>
@@ -212,6 +209,8 @@ public static class DependencyInjection
         //        // if specified, limits the wait time when stopping the bus
         //        options.StopTimeout = TimeSpan.FromSeconds(30);
         //    });
+        #endregion
+
         #endregion
 
 

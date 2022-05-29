@@ -84,7 +84,7 @@ const AddWeatherForecast = (props) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="staticBackdropLabel">
-              Add Weather Forecast
+              {!props.data.id ? "Add" : "Edit"} Weather Forecast
             </h5>
             <button
               type="button"

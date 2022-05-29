@@ -31,7 +31,7 @@ services:
       - weatherforecastdb
       - rabbitmq
     ports:
-      - "5001:80"
-      - "7443:443"
+      - "5051:80"
+      - "7071:443"
     volumes:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

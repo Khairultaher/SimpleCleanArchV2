@@ -71,6 +71,7 @@ class WeatherForecastCreatedConsumer : IConsumer<WeatherForecastEvent>
         {
             var jsonMessage = JsonConvert.SerializeObject(context.Message);
             Console.WriteLine($"New weather forecast for {context.Message.Location} is added: {jsonMessage}");
+            Console.WriteLine("\r\n");
         });
     }
 }
@@ -83,6 +84,7 @@ class WeatherForecastUpdatedConsumer : IConsumer<WeatherForecastEvent>
         {
             var jsonMessage = JsonConvert.SerializeObject(context.Message);
             Console.WriteLine($"Weather forecast for {context.Message.Location} is updated : {jsonMessage}");
+            Console.WriteLine("\r\n");
         });
     }
 }
