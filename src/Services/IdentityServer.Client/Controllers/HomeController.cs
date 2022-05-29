@@ -1,10 +1,12 @@
 ﻿using IdentityModel.Client;
 using IdentityServe.Client.Models;
+using IdentityServer.API;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using System.Net.Http.Headers;
@@ -28,47 +30,6 @@ namespace IdentityServe.Client.Controllers
 
         public async Task<IActionResult> PrivacyAsync()
         {
-            var client = new HttpClient();
-
-            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
-            if (disco.IsError)
-            {
-                Console.WriteLine(disco.Error);
-                return View();
-            }
-
-            // request token
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-            {
-                Address = disco.TokenEndpoint,
-                ClientId = "client2",
-                ClientSecret = "secret",
-                Scope = "apiscope"
-            });
-
-            if (tokenResponse.IsError)
-            {
-                Console.WriteLine(tokenResponse.Error);
-                return View();
-            }
-
-            Console.WriteLine(tokenResponse.Json);
-            Console.WriteLine("\n\n");
-
-            // call api
-            var apiClient = new HttpClient();
-            apiClient.SetBearerToken(tokenResponse.AccessToken);
-
-            var response = await apiClient.GetAsync("https://localhost:5003/identity");
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine(response.StatusCode);
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(JArray.Parse(content));
-            }
             return View();
         }
 
@@ -102,6 +63,54 @@ namespace IdentityServe.Client.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> Weather()
+        {
+            var client = new HttpClient();
+
+            var disco = await client.GetDiscoveryDocumentAsync("https://localhost:5001");
+            if (disco.IsError)
+            {
+                Console.WriteLine(disco.Error);
+                return View();
+            }
+
+            // request token
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+                ClientId = "client2",
+                ClientSecret = "secret",
+                Scope = "apiscope"
+            });
+
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return View();
+            }
+
+            Console.WriteLine(tokenResponse.Json);
+            Console.WriteLine("\n\n");
+
+            // call api
+            var apiClient = new HttpClient();
+            apiClient.SetBearerToken(tokenResponse.AccessToken);
+
+            var response = await apiClient.GetAsync("https://localhost:5003/WeatherForecast");
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(response.StatusCode);
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var movieList = JsonConvert.DeserializeObject<List<WeatherForecast>>(content);
+                Console.WriteLine(JArray.Parse(content));
+                return View(movieList);
+            }
+            return View();
         }
     }
 }

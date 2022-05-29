@@ -27,7 +27,7 @@ namespace IdentityServer
 
         private async Task SeedInitialData(CancellationToken cancellationToken)
         {
-            await SeedDefaultUserAsync();
+            await SeedDefaultApplicationUserAsync();
 
             // Initialize PersistedGrantDb & ConfigurationDb
             await SeedPersistedGrantDbConfigurationDbAsync();
@@ -36,7 +36,7 @@ namespace IdentityServer
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
         #region Internal functions
-        public async Task SeedDefaultUserAsync()
+        public async Task SeedDefaultApplicationUserAsync()
         {
             using var scope = _serviceProvider.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -53,7 +53,7 @@ namespace IdentityServer
                     Email = "AliceSmith@email.com",
                     EmailConfirmed = true,
                 };
-                var result = userMgr.CreateAsync(alice, "Pass123$").Result;
+                var result = userMgr.CreateAsync(alice, "alice").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
@@ -85,7 +85,7 @@ namespace IdentityServer
                     Email = "BobSmith@email.com",
                     EmailConfirmed = true
                 };
-                var result = userMgr.CreateAsync(bob, "Pass123$").Result;
+                var result = userMgr.CreateAsync(bob, "alice").Result;
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);

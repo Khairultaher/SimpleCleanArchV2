@@ -8,11 +8,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-//builder.Services.AddMvcCore()
-//            .AddAuthorization()
-//            .AddJsonFormatters();
-
 // accepts any access token issued by identity server
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
@@ -25,7 +20,7 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
-// adds an authorization policy to make sure the token is for scope 'api1'
+// adds an authorization policy to make sure the token is for scope 'apiscope'
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("apiscope", policy =>

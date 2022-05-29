@@ -32,14 +32,12 @@ namespace IdentityServer
                 {
                     ClientId = "client1",
                     ClientName = "MVC WEB API",
+                    AllowedGrantTypes = GrantTypes.Code,
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    //AllowedGrantTypes = GrantTypes.Implicit,
-                    //AllowedGrantTypes = GrantTypes.Code,
-                    //AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-
-                    RequirePkce = false,
-                    AllowRememberConsent = false,
+                    
+                    //RequireClientSecret = false,                  
+                    //RequirePkce = false,
+                    //AllowRememberConsent = false,
 
                     // where to redirect to after login
                     RedirectUris = { "https://localhost:5002/signin-oidc" },

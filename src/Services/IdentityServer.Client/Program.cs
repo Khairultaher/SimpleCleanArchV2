@@ -31,10 +31,8 @@ builder.Services.AddAuthentication(options =>
 
     options.ClientId = "client1";
     options.ClientSecret = "secret";
-    //options.ResponseType = "code";
-    //options.ResponseType = "hybrid";
-    //options.ResponseType = "id_token";
-    options.ResponseType = "code id_token";
+    options.ResponseType = "code";
+    //options.ResponseType = "code id_token";
 
     options.Scope.Add("apiscope");
 
