@@ -14,9 +14,9 @@ Use $Env:BROWSER="none". Now running npm start will not open a new browser windo
 
 ## Migrations
 ```
+Scaffold-DbContext "Server=.;Database=dbname;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
+Scaffold-DbContext "Server=.;Database=dbname;user=sa;Password=SA@12345;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities
 
-Add-Migration InitialPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
-Add-Migration InitialConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb
 
 Update-Database -Context PersistedGrantDbContext
 Update-Database -Context ConfigurationDbContext
