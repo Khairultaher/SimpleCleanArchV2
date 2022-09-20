@@ -86,10 +86,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(s => s.SerializeAsV2 = true);
+    //app.UseSwagger(s => s.SerializeAsV2 = true);
+    app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CTS V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CTSD V1");
         c.DefaultModelsExpandDepth(-1);
 
     });

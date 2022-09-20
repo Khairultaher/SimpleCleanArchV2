@@ -90,12 +90,16 @@ public class DatabaseSeedingService : IHostedService
             {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
             };
-
+            string[] locations = new[]
+            {
+            "Dhaka", "Faridpur", "Rajbari", "Jashor", "Khulna", "Potuakhali", "Munsigang"
+            };
             var data = Enumerable.Range(1, 100).Select(index => new WeatherForecastEntity
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)],
+                Location = locations[Random.Shared.Next(locations.Length)]
             })
             .ToArray();
             await context.WeatherForecasts.AddRangeAsync(data);
