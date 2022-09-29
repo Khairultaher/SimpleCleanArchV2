@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using WeatherForecast.API.Services;
 using WeatherForecast.Application;
@@ -50,7 +51,23 @@ builder.Services.AddControllers().AddFluentValidation(c =>
 });
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Clinical Trial Subject", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "Weather Forecast", 
+        Version = "v1",
+        TermsOfService = new Uri("https://github.com/Khairultaher"),
+        Contact = new OpenApiContact
+        {
+            Name = "Support",
+            Email = "support@abc.com",
+            Url = new Uri("https://github.com/Khairultaher"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Use under LICX",
+            Url = new Uri("https://github.com/Khairultaher"),
+        }
+    });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
@@ -71,8 +88,14 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+    c.ExampleFilters();
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
 });
 builder.Services.AddFluentValidationRulesToSwagger();
+builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
 
 //services cors
 builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
@@ -90,7 +113,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CTSD V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "WF V1");
         c.DefaultModelsExpandDepth(-1);
 
     });

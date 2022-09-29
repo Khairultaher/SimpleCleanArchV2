@@ -12,6 +12,8 @@ using MassTransit;
 using EventBus.Events;
 using System.Net;
 using EventBus.Common;
+using Swashbuckle.AspNetCore.Filters;
+using WeatherForecast.API.ExampleModels;
 
 namespace SimpleCleanArch.API.Controllers
 {
@@ -34,8 +36,23 @@ namespace SimpleCleanArch.API.Controllers
             _publishEndpoint = publishEndpoint;
         }
 
+        /// <summary>
+        /// Get Weather Forecast 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>Return success/fail status</returns>
+        /// <remarks>
+        /// **Sample request body:**
+        ///
+        ///     {
+        ///        "PageNumber": 1,
+        ///        "PageSize": 10,
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Success</response>
+        /// <response code="401">Failed/Unauthorized</response>
         [HttpGet]
-        [Route("GetWeatherForecast")]
         //[Authorize(Roles = "Admin")]
         //[Authorize(policy: "AccountsAdmin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
@@ -45,20 +62,56 @@ namespace SimpleCleanArch.API.Controllers
             return Ok(await Mediator.Send(query));
         }
 
+        /// <summary>
+        /// Get Weather Forecast 
+        /// </summary>
+        /// <param name="pageNumber" example="1" ></param>
+        /// <param name="pageSize" example="10" ></param>
+        /// <returns>Return success/fail status</returns>
+        /// <remarks>
+        /// **Sample request body:**
+        ///
+        ///     {
+        ///        "PageNumber": 1,
+        ///        "PageSize": 10
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Success</response>
+        /// <response code="401">Failed/Unauthorized</response>
         [HttpGet]
+        [Route("GetWeatherForecast")]
         //[Authorize(policy: "Admin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
-        public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery] GetWeatherForecastWithPaginationQuery query)
+        public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery]  int pageNumber, int pageSize)
         {
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetWeatherForecastWithPaginationQuery { PageNumber = pageNumber, PageSize = pageSize }));
         }
 
+        /// <summary>
+        /// Add Weather Forecast
+        /// </summary>
+        /// <param name="command" example=""></param>
+        /// <returns>Return success/fail status</returns>
+        /// <remarks>
+        /// **Sample request body:**
+        ///
+        ///     {
+        ///        "TemperatureC": 30,
+        ///        "Location": "Dhaka",
+        ///        "Summary": "Hot"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Success</response>
+        /// <response code="401">Failed/Unauthorized</response>
         [HttpPost]
         //[Authorize(policy: "Admin")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromForm] CreateWeatherForecastCommand command)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        //[SwaggerRequestExample(typeof(CreateWeatherForecastCommand), typeof(CreateWeatherForecastCommandExample))]
+        public async Task<IActionResult> Create([FromBody] CreateWeatherForecastCommand command)
         {
             response.Data = await Mediator.Send(command);
             response.Message = "Item Added successfully";
@@ -70,11 +123,30 @@ namespace SimpleCleanArch.API.Controllers
         }
 
 
+        /// <summary>
+        /// Update Weather Forecast
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>Return success/fail status</returns>
+        /// <remarks>
+        /// **Sample request body:**
+        ///
+        ///     {
+        ///        "Id": 12,
+        ///        "TemperatureC": 30,
+        ///        "Location": "Dhaka",
+        ///        "Summary": "Hot"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Success</response>
+        /// <response code="401">Failed/Unauthorized</response>
         [HttpPut]
         //[Authorize(policy: "Admin")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesDefaultResponseType]
-        public async Task<ActionResult> Update([FromForm] UpdateWeatherForecastCommand command)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        //[SwaggerRequestExample(typeof(UpdateWeatherForecastCommand), typeof(UpdateWeatherForecastCommandExample))]
+        public async Task<ActionResult> Update([FromBody] UpdateWeatherForecastCommand command)
         {
             response.Data = await Mediator.Send(command);
             response.Message = "Item updated successfully";
@@ -86,6 +158,7 @@ namespace SimpleCleanArch.API.Controllers
         }
 
 
+        /// <param name="id" example="123">The product id</param>
         [HttpDelete]
         //[Authorize(policy: "Admin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
