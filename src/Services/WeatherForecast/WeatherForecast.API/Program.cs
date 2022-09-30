@@ -11,6 +11,7 @@ using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure;
 using WeatherForecast.Infrastructure.Middlewares;
+using WeatherForecast.Infrastucture.Middlewares;
 using static WeatherForecast.Application.Constants.AppConstants;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,26 +69,44 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://github.com/Khairultaher"),
         }
     });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()
     {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
+        // For JWT Bearer
+        //Name = "Authorization",
+        //Scheme = "Bearer",
+        //BearerFormat = "JWT",
+        //Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+
+        // For ApiKey Auth
+        Name = "ApiKey",
+        Scheme = "ApiKeyScheme",
+        Description = "ApiKey must appear in header",
+
+        // Common
+        Type = SecuritySchemeType.ApiKey,   
         In = ParameterLocation.Header,
-        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+        
     });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-        {
+    
+    var securityRequirement = new OpenApiSecurityRequirement {
+        {           
             new OpenApiSecurityScheme {
-                Reference = new OpenApiReference {
+                Reference = new OpenApiReference
+                {
                     Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                }
+                    // For JWT Bearer
+                    //Id = "Bearer"
+
+                    //For ApiKey Auth
+                    Id = "ApiKey"
+                },
+                In = ParameterLocation.Header
             },
             new string[] {}
         }
-    });
+    };
+   
+    c.AddSecurityRequirement(securityRequirement);
     c.ExampleFilters();
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -121,6 +140,7 @@ if (app.Environment.IsDevelopment())
 
 // custom middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ApiKeyAuthMiddleware>();
 app.UseCors("cors");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
