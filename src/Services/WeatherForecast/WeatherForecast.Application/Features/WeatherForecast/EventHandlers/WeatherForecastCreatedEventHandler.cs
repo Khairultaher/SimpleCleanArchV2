@@ -8,10 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using WeatherForecast.Domain.Entities;
 
 namespace WeatherForecast.Application.Features.WeatherForecast.EventHandlers
 {
-    public class WeatherForecastCreatedEventHandler : INotificationHandler<DomainEventNotification<WeatherForecastCreatedEvent>>
+    public class WeatherForecastCreatedEventHandler : INotificationHandler<DomainEventNotification<EntityCreatedEvent<WeatherForecastEntity>>>
     {
         private readonly ILogger<WeatherForecastCreatedEventHandler> _logger;
 
@@ -20,7 +21,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.EventHandlers
             _logger = logger;
         }
 
-        public Task Handle(DomainEventNotification<WeatherForecastCreatedEvent> notification, CancellationToken cancellationToken)
+        public Task Handle(DomainEventNotification<EntityCreatedEvent<WeatherForecastEntity>> notification, CancellationToken cancellationToken)
         {
             var domainEvent = notification.DomainEvent;
 
