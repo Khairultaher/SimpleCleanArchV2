@@ -7,6 +7,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="SqlScripts\Functions\fnGetTemperatureByLocation.sql" />
+	  <None Remove="SqlScripts\Procedures\spGetWeatherInformation.sql" />
+	  <None Remove="SqlScripts\Views\vwLocationTemperatureSummery.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="SqlScripts\Functions\fnGetTemperatureByLocation.sql" />
+	  <EmbeddedResource Include="SqlScripts\Procedures\spGetWeatherInformation.sql" />
+	  <EmbeddedResource Include="SqlScripts\Views\vwLocationTemperatureSummery.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MassTransit" Version="8.0.2" />
 		<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
 		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.2" />
