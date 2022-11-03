@@ -6,7 +6,7 @@ namespace WeatherForecast.Domain.Extensions
 {
     public static class NonTableObjectMigrationExtension
     {
-        public static void RunSqlScript(this MigrationBuilder migrationBuilder, string script)
+        public static void RunNonTableSqlScript(this MigrationBuilder migrationBuilder, string script)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resourceName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.EndsWith($"{script}.sql"));

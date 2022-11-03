@@ -10,9 +10,9 @@ namespace WeatherForecast.Infrastucture.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RunSqlScript(View.LocationTemperatureSummery);
-            migrationBuilder.RunSqlScript(Procedure.GetWeatherInformation);
-            migrationBuilder.RunSqlScript(Function.GetTemperatureByLocation);
+            migrationBuilder.RunNonTableSqlScript(View.LocationTemperatureSummery);
+            migrationBuilder.RunNonTableSqlScript(Procedure.GetWeatherInformation);
+            migrationBuilder.RunNonTableSqlScript(Function.GetTemperatureByLocation);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
