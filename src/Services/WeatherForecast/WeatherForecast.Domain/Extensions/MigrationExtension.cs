@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 #nullable disable
 
-namespace WeatherForecast.Infrastucture.Extensions
+namespace WeatherForecast.Domain.Extensions
 {
-    public static class MigrationExtension
+    public static class NonTableObjectMigrationExtension
     {
         public static void RunSqlScript(this MigrationBuilder migrationBuilder, string script)
         {

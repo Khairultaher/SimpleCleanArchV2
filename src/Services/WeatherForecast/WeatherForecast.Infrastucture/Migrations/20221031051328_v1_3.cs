@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using WeatherForecast.Domain.Constants;
-using WeatherForecast.Infrastucture.Extensions;
+using WeatherForecast.Domain.Extensions;
 
 #nullable disable
 
@@ -11,7 +11,7 @@ namespace WeatherForecast.Infrastucture.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RunSqlScript(View.LocationTemperatureSummery);
-            migrationBuilder.RunSqlScript(Procedure.GetWeatherInformation);       
+            migrationBuilder.RunSqlScript(Procedure.GetWeatherInformation);
             migrationBuilder.RunSqlScript(Function.GetTemperatureByLocation);
         }
 

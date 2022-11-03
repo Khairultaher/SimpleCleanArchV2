@@ -7,8 +7,24 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="NonTableObjects\Functions\fnGetTemperatureByLocation.sql" />
+	  <None Remove="NonTableObjects\Procedures\spGetWeatherInformation.sql" />
+	  <None Remove="NonTableObjects\Views\vwLocationTemperatureSummery.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="NonTableObjects\Functions\fnGetTemperatureByLocation.sql" />
+	  <EmbeddedResource Include="NonTableObjects\Procedures\spGetWeatherInformation.sql" />
+	  <EmbeddedResource Include="NonTableObjects\Views\vwLocationTemperatureSummery.sql" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="Enums\" />
 		<Folder Include="ValueObjects\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.5" />
 	</ItemGroup>
 
 </Project>
