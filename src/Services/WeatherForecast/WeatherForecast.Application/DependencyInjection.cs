@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
