@@ -13,11 +13,12 @@ using WeatherForecast.Infrastructure;
 using WeatherForecast.Infrastructure.Middlewares;
 using WeatherForecast.Infrastucture.Middlewares;
 using static WeatherForecast.Application.Constants.AppConstants;
+#nullable disable
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configuration
-builder.Configuration.AddJsonFile($"appsettings.json", false, true);
+builder.Configuration.AddJsonFile($"appsettings.json", false, true).AddEnvironmentVariables();
 var env = builder.Configuration.GetSection("Environment").Value;
 builder.Configuration.AddJsonFile($"appsettings.{env}.json", false, true);
 //IConfiguration configuration = new ConfigurationBuilder().AddJsonFile($"appsettings.{env}.json").Build();                           .Build();
