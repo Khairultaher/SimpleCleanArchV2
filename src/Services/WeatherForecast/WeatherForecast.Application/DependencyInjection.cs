@@ -16,7 +16,8 @@ namespace WeatherForecast.Application
             var applicationAssembly = Assembly.GetExecutingAssembly();
 
             services.AddAutoMapper(applicationAssembly);
-            services.AddMediatR(applicationAssembly);
+            //services.AddMediatR(applicationAssembly);
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies()); //Perfect solution
             services.AddValidatorsFromAssembly(applicationAssembly);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
