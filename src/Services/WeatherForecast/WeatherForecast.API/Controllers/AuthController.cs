@@ -31,6 +31,23 @@ namespace WeatherForecast.API.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
+        /// <summary>
+        /// Login 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>Return success/fail status</returns>
+        /// <remarks>
+        /// **Sample request body:**
+        ///
+        ///     {
+        ///        "userName": "admin",
+        ///        "passWord":  "Qwe@1234"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="200">Success</response>
+        /// <response code="401">Failed/Unauthorized</response>
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login(LoginModel vm)

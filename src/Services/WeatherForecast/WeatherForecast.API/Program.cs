@@ -2,8 +2,10 @@ using EventBus.Common;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 using WeatherForecast.API.Services;
 using WeatherForecast.Application;
@@ -70,23 +72,21 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://github.com/Khairultaher"),
         }
     });
-    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
+        In = ParameterLocation.Header,
         // For JWT Bearer
-        //Name = "Authorization",
-        //Scheme = "Bearer",
-        //BearerFormat = "JWT",
-        //Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+        Name = "Authorization",
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+        Type = SecuritySchemeType.Http,
 
         // For ApiKey Auth
-        Name = "ApiKey",
-        Scheme = "ApiKeyScheme",
-        Description = "ApiKey must appear in header",
-
-        // Common
-        Type = SecuritySchemeType.ApiKey,   
-        In = ParameterLocation.Header,
-        
+        //Name = "ApiKey",
+        //Scheme = "ApiKeyScheme",
+        //Description = "ApiKey must appear in header",
+        //Type = SecuritySchemeType.ApiKey,    
     });
     
     var securityRequirement = new OpenApiSecurityRequirement {
@@ -96,10 +96,10 @@ builder.Services.AddSwaggerGen(c =>
                 {
                     Type = ReferenceType.SecurityScheme,
                     // For JWT Bearer
-                    //Id = "Bearer"
+                    Id = "Bearer"
 
                     //For ApiKey Auth
-                    Id = "ApiKey"
+                    //Id = "ApiKey"
                 },
                 In = ParameterLocation.Header
             },
@@ -113,6 +113,36 @@ builder.Services.AddSwaggerGen(c =>
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
+
+    // group controllers
+    c.TagActionsBy(api =>
+    {
+        if (api.GroupName != null)
+        {
+            if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDes)
+            {
+                if (controllerActionDes.ControllerName == "Demographic")
+                {
+                    return new[] { api.GroupName + ": " + controllerActionDes.ControllerName + "/Subject" };
+                }
+                return new[] { api.GroupName + ": " + controllerActionDes.ControllerName };
+            }
+            //return new[] { api.GroupName };
+        }
+
+        if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+        {
+            if (controllerActionDescriptor.ControllerName == "Demographic")
+            {
+                return new[] { controllerActionDescriptor.ControllerName + "/Subject" };
+            }
+            return new[] { controllerActionDescriptor.ControllerName };
+        }
+
+        throw new InvalidOperationException("Unable to determine tag for endpoint.");
+    });
+
+    c.DocInclusionPredicate((name, api) => true);
 });
 builder.Services.AddFluentValidationRulesToSwagger();
 builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
@@ -133,15 +163,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
+        c.DocumentTitle = "WF API";
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "WF V1");
         c.DefaultModelsExpandDepth(-1);
-
+        c.DocExpansion(DocExpansion.None);
     });
 }
 
 // custom middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-app.UseMiddleware<ApiKeyAuthMiddleware>();
+//app.UseMiddleware<ApiKeyAuthMiddleware>(); // when use api key
 app.UseCors("cors");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -152,10 +183,10 @@ app.MapControllers();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    //    endpoints.MapGet("/", async context =>
-    //    {
-    //        await context.Response.WriteAsync("Yes, I am on...");
-    //    });
+    endpoints.MapGet("/", async context =>
+    {
+        await context.Response.WriteAsync("Yes, I am on...");
+    });
 });
 
 app.Run();

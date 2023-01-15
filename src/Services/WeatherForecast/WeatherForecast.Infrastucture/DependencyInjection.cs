@@ -2,10 +2,14 @@
 using EventBus.Events;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using RabbitMQ.Client;
+using System.Text;
+using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Interfaces.Identity;
 using WeatherForecast.Application.Interfaces.Persistence;
 using WeatherForecast.Application.Interfaces.Security;
@@ -126,24 +130,24 @@ public static class DependencyInjection
 
         #region Configure Token Based Authentication 
 
-        //services.AddAuthentication(options =>
-        //{
-        //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
-        //}).AddJwtBearer(options =>
-        //{
-        //    options.SaveToken = true;
-        //    options.TokenValidationParameters = new TokenValidationParameters
-        //    {
-        //        ValidateIssuer = true,
-        //        ValidIssuer = Constants.JwtSettings.Issuer,
-        //        ValidateAudience = true,
-        //        ValidAudience = Constants.JwtSettings.Audience,
-        //        ValidateIssuerSigningKey = true,
-        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.JwtSettings.SigningKey))
-        //    };
-        //});
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidIssuer = AppConstants.JwtSettings.Issuer,
+                ValidateAudience = true,
+                ValidAudience = AppConstants.JwtSettings.Audience,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.JwtSettings.SigningKey))
+            };
+        });
 
         #endregion
 
