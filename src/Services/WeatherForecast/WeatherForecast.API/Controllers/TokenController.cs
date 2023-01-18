@@ -12,11 +12,12 @@ namespace WeatherForecast.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : BaseController
+    [ApiExplorerSettings(GroupName = "AUTH", IgnoreApi = false)]
+    public class RefreshTokenController : BaseController
     {
         private readonly IJwtTokenHelper _tokenService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public TokenController(IJwtTokenHelper tokenService, UserManager<ApplicationUser> userManager)
+        public RefreshTokenController(IJwtTokenHelper tokenService, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
             _tokenService = tokenService ?? throw new ArgumentNullException(nameof(tokenService));

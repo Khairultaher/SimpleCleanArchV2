@@ -13,6 +13,7 @@ namespace WeatherForecast.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "AUTH", IgnoreApi = false)]
     public class AuthController : BaseController
     {
         private readonly ILogger<AuthController> _logger;

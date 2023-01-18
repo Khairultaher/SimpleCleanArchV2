@@ -19,6 +19,7 @@ namespace SimpleCleanArch.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "WF", IgnoreApi = false)]
     public class WeatherForecastController : BaseController
     {
         private static readonly string[] Summaries = new[]
