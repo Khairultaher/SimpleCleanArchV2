@@ -17,7 +17,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
 
-        public string? Location { get; set; }
+        public string? Location { get; set; } = null;
     }
 
     public class GetWeatherForecastWithPaginationQueryHandler
