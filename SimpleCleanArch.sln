@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{79283C8C-65B6-4DBB-A7DF-5EA7C90C849E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{79283C8C-65B6-4DBB-A7DF-5EA7C90C849E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{654A9DA6-F4E6-4F25-AD07-287556A4C81A}"
 EndProject
@@ -11,29 +11,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApps", "WebApps", "{F503
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WeatherForecast", "WeatherForecast", "{AAA9949E-09A3-431E-8C6B-E93FB20CD16C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.API", "Services\WeatherForecast\WeatherForecast.API\WeatherForecast.API.csproj", "{0E327B56-04CB-429E-AFE6-3E023022CA9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.API", "source\Services\WeatherForecast\WeatherForecast.API\WeatherForecast.API.csproj", "{0E327B56-04CB-429E-AFE6-3E023022CA9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Domain", "Services\WeatherForecast\WeatherForecast.Domain\WeatherForecast.Domain.csproj", "{F2E7AFA8-76B7-412E-8153-0F3E8844BC18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Domain", "source\Services\WeatherForecast\WeatherForecast.Domain\WeatherForecast.Domain.csproj", "{F2E7AFA8-76B7-412E-8153-0F3E8844BC18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Application", "Services\WeatherForecast\WeatherForecast.Application\WeatherForecast.Application.csproj", "{ABCD11CE-8CF0-474D-B974-F683C5ED4C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Application", "source\Services\WeatherForecast\WeatherForecast.Application\WeatherForecast.Application.csproj", "{ABCD11CE-8CF0-474D-B974-F683C5ED4C6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Infrastucture", "Services\WeatherForecast\WeatherForecast.Infrastucture\WeatherForecast.Infrastucture.csproj", "{CE37D66E-42C0-4D1B-A91A-7300AAE48844}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Infrastucture", "source\Services\WeatherForecast\WeatherForecast.Infrastucture\WeatherForecast.Infrastucture.csproj", "{CE37D66E-42C0-4D1B-A91A-7300AAE48844}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{CDEE0992-0A87-46D9-9422-1AC86F590B82}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WeatherForecast.Web", "WebApps\WeatherForecast.Web\WeatherForecast.Web.esproj", "{51020D12-922B-454E-9AF9-C14D9F0DF477}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WeatherForecast.Web", "source\WebApps\WeatherForecast.Web\WeatherForecast.Web.esproj", "{51020D12-922B-454E-9AF9-C14D9F0DF477}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{941E3218-F438-495E-8F90-5BE5CA9C59A1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Consumer", "Services\WeatherForecast.Consumer\WeatherForecast.Consumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Consumer", "source\Services\WeatherForecast.Consumer\WeatherForecast.Consumer.csproj", "{03184C3E-0DA6-4EAC-B393-C993DD1E368B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "BuildingBlocks\Common.Models\EventBus.csproj", "{9037CB50-0D35-4363-80DE-9174C4D1D985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "source\BuildingBlocks\Common.Models\EventBus.csproj", "{9037CB50-0D35-4363-80DE-9174C4D1D985}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "Services\IdentityServer\IdentityServer.csproj", "{46AC194E-C2AF-47D7-B1B5-95491581E7EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "source\Services\IdentityServer\IdentityServer.csproj", "{46AC194E-C2AF-47D7-B1B5-95491581E7EB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "Services\IdentityServer.API\IdentityServer.API.csproj", "{85C8EA97-BAB7-443A-93A4-B803F89EA27E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "source\Services\IdentityServer.API\IdentityServer.API.csproj", "{85C8EA97-BAB7-443A-93A4-B803F89EA27E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer.Client", "Services\IdentityServer.Client\IdentityServer.Client.csproj", "{A0ADC624-8631-414A-A72C-4FB7948CEAEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.Client", "source\Services\IdentityServer.Client\IdentityServer.Client.csproj", "{A0ADC624-8631-414A-A72C-4FB7948CEAEC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7702730D-F06E-42CB-B91D-F7DB73E51594}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{E69B859A-E5E1-4EAE-8091-C2CAC988F457}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Application.Tests", "test\WeatherForecast.Application.Tests\WeatherForecast.Application.Tests.csproj", "{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateway", "source\ApiGateway\OcelotApiGateway\OcelotApiGateway.csproj", "{069B21F0-D578-49ED-94C3-BF31A83002B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,22 +95,36 @@ Global
 		{A0ADC624-8631-414A-A72C-4FB7948CEAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0ADC624-8631-414A-A72C-4FB7948CEAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0ADC624-8631-414A-A72C-4FB7948CEAEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{79283C8C-65B6-4DBB-A7DF-5EA7C90C849E} = {E69B859A-E5E1-4EAE-8091-C2CAC988F457}
+		{654A9DA6-F4E6-4F25-AD07-287556A4C81A} = {E69B859A-E5E1-4EAE-8091-C2CAC988F457}
+		{F5038296-0C29-43EB-A15C-468F575A4CEC} = {E69B859A-E5E1-4EAE-8091-C2CAC988F457}
 		{AAA9949E-09A3-431E-8C6B-E93FB20CD16C} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
 		{0E327B56-04CB-429E-AFE6-3E023022CA9A} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
 		{F2E7AFA8-76B7-412E-8153-0F3E8844BC18} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
 		{ABCD11CE-8CF0-474D-B974-F683C5ED4C6E} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
 		{CE37D66E-42C0-4D1B-A91A-7300AAE48844} = {AAA9949E-09A3-431E-8C6B-E93FB20CD16C}
+		{CDEE0992-0A87-46D9-9422-1AC86F590B82} = {E69B859A-E5E1-4EAE-8091-C2CAC988F457}
 		{51020D12-922B-454E-9AF9-C14D9F0DF477} = {F5038296-0C29-43EB-A15C-468F575A4CEC}
 		{03184C3E-0DA6-4EAC-B393-C993DD1E368B} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
 		{9037CB50-0D35-4363-80DE-9174C4D1D985} = {CDEE0992-0A87-46D9-9422-1AC86F590B82}
 		{46AC194E-C2AF-47D7-B1B5-95491581E7EB} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
 		{85C8EA97-BAB7-443A-93A4-B803F89EA27E} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
 		{A0ADC624-8631-414A-A72C-4FB7948CEAEC} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
+		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6} = {7702730D-F06E-42CB-B91D-F7DB73E51594}
+		{069B21F0-D578-49ED-94C3-BF31A83002B7} = {79283C8C-65B6-4DBB-A7DF-5EA7C90C849E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CCB2891-D429-44F4-96D9-CBD17CF29346}
