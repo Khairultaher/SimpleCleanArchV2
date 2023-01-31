@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using WeatherForecast.Application.Common.Mappings;
+using WeatherForecast.Application.Exceptions;
 using WeatherForecast.Application.Features.WeatherForecast.Commands.Create;
 using WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeatherForecast;
 using WeatherForecast.Application.Interfaces.Persistence;
@@ -62,14 +63,14 @@ namespace WeatherForecast.Application.Tests
         }
 
         [Fact]
-        public async Task HandleTest() 
+        public async Task HandleTest()
         {
             // Arrange
             var handler = new CreateWeatherForecastCommandHandler(_context);
 
             // Act
             var result = await handler.Handle(
-                new CreateWeatherForecastCommand() 
+                new CreateWeatherForecastCommand()
                 {
                     TemperatureC = 30,
                     Location = "dhaka",
@@ -79,6 +80,31 @@ namespace WeatherForecast.Application.Tests
             // Assert
             result.ShouldBeOfType<int>();
             result.ShouldBeEquivalentTo(0);
+        }
+
+
+        [Fact]
+        public async Task Invalid_Forecast_Added()
+        {
+            // Arrange
+            var handler = new CreateWeatherForecastCommandHandler(_context);
+
+            // Act
+
+            var forecast = new CreateWeatherForecastCommand()
+            {
+                //TemperatureC = 30,
+                Location = "dhaka",
+                //Summary = "cold"
+            };
+
+            ValidationException ex = await Should.ThrowAsync<ValidationException>(async () =>
+            await handler.Handle(forecast, CancellationToken.None)
+                );
+
+            // Assert
+            ex.ShouldNotBeNull();
+
         }
 
     }
