@@ -99,8 +99,7 @@ namespace WeatherForecast.Application.Tests
             };
 
             ValidationException ex = await Should.ThrowAsync<ValidationException>(async () =>
-            await handler.Handle(forecast, CancellationToken.None)
-                );
+            await handler.Handle(forecast, CancellationToken.None));
 
             // Assert
             ex.ShouldNotBeNull();
