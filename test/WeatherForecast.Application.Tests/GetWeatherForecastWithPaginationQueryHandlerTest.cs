@@ -69,7 +69,7 @@ namespace WeatherForecast.Application.Tests
             var result = await handler.Handle(new GetWeatherForecastWithPaginationQuery(), CancellationToken.None);
 
             // Assert
-            result.ShouldBeAssignableTo <PaginatedList<WeatherForecastModel>>();
+            result.ShouldBeOfType<PaginatedList<WeatherForecastModel>>();
         }
 
     }

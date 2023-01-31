@@ -1,6 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using WeatherForecast.Application.Common.Mappings;
+using WeatherForecast.Application.Features.WeatherForecast.Commands.Create;
 using WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeatherForecast;
 using WeatherForecast.Application.Interfaces.Persistence;
 using WeatherForecast.Application.Mappings;
@@ -10,11 +12,11 @@ using WeatherForecast.Domain.Entities;
 
 namespace WeatherForecast.Application.Tests
 {
-    public class GetWeatherForecastWithPaginationQueryHandlerTest2
+    public class CreateWeatherForecastCommandHandlerTest
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public GetWeatherForecastWithPaginationQueryHandlerTest2()
+        public CreateWeatherForecastCommandHandlerTest()
         {
             var mapperConfig = new MapperConfiguration(c =>
             {
@@ -63,13 +65,20 @@ namespace WeatherForecast.Application.Tests
         public async Task HandleTest() 
         {
             // Arrange
-            var handler = new GetWeatherForecastWithPaginationQueryHandler(_context, _mapper);
+            var handler = new CreateWeatherForecastCommandHandler(_context);
 
             // Act
-            var result = await handler.Handle(new GetWeatherForecastWithPaginationQuery(), CancellationToken.None);
+            var result = await handler.Handle(
+                new CreateWeatherForecastCommand() 
+                {
+                    TemperatureC = 30,
+                    Location = "dhaka",
+                    Summary = "cold"
+                }, CancellationToken.None);
 
             // Assert
-            result.ShouldBeAssignableTo <PaginatedList<WeatherForecastModel>>();
+            result.ShouldBeOfType<int>();
+            result.ShouldBeEquivalentTo(0);
         }
 
     }
