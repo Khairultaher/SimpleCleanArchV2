@@ -68,9 +68,9 @@ const AddWeatherForecast = (props) => {
     formData.set("location", location);
 
     if (!props.data.id) {
-      await dispatch(addForcast(formData));
+      await dispatch(addForcast(JSON.stringify(Object.fromEntries(formData))));
     } else {
-      await dispatch(editForcast(formData));
+      await dispatch(editForcast(JSON.stringify(Object.fromEntries(formData))));
     }
 
     if (success) {

@@ -97,7 +97,7 @@ public class DatabaseSeedingService : IHostedService
             var data = Enumerable.Range(1, 100).Select(index => new WeatherForecastEntity
             {
                 Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
+                TemperatureC = Random.Shared.Next(25, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)],
                 Location = locations[Random.Shared.Next(locations.Length)]
             })

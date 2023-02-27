@@ -14,6 +14,7 @@ using System.Net;
 using EventBus.Common;
 using Swashbuckle.AspNetCore.Filters;
 using WeatherForecast.API.ExampleModels;
+using Janus.Application.Extensions;
 
 namespace SimpleCleanArch.API.Controllers
 {
@@ -58,7 +59,7 @@ namespace SimpleCleanArch.API.Controllers
         //[Authorize(policy: "AccountsAdmin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
-        public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
+        public async Task<ActionResult<PagedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
             return Ok(await Mediator.Send(query));
         }
@@ -68,6 +69,7 @@ namespace SimpleCleanArch.API.Controllers
         /// </summary>
         /// <param name="pageNumber" example="1" ></param>
         /// <param name="pageSize" example="10" ></param>
+        ///  <param name="orderBy" example="Date asc" ></param>
         /// <returns>Return success/fail status</returns>
         /// <remarks>
         /// **Sample request body:**
@@ -75,6 +77,7 @@ namespace SimpleCleanArch.API.Controllers
         ///     {
         ///        "PageNumber": 1,
         ///        "PageSize": 10
+        ///        "OrderBy": "Date asc"
         ///     }
         ///
         /// </remarks>
@@ -85,9 +88,9 @@ namespace SimpleCleanArch.API.Controllers
         [Authorize(policy: "Admin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
-        public async Task<ActionResult<PaginatedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery]  int pageNumber, int pageSize)
+        public async Task<ActionResult<PagedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery]  int pageNumber, int pageSize, string orderBy)
         {
-            return Ok(await Mediator.Send(new GetWeatherForecastWithPaginationQuery { PageNumber = pageNumber, PageSize = pageSize }));
+            return Ok(await Mediator.Send(new GetWeatherForecastWithPaginationQuery { PageNumber = pageNumber, PageSize = pageSize , OrderBy = orderBy}));
         }
 
         /// <summary>

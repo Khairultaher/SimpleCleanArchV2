@@ -13,6 +13,16 @@ public class WeatherForecastConfiguration : IEntityTypeConfiguration<WeatherFore
 {
     public void Configure(EntityTypeBuilder<WeatherForecastEntity> builder)
     {
+        builder.ToTable("WeatherForecasts", "dbo", tb => tb.IsTemporal(ttb =>
+        {
+            ttb.HasPeriodStart("ValidFrom");
+            ttb.HasPeriodEnd("ValidTo");
+            ttb.UseHistoryTable("WeatherForecastsHistory", "dbo");
+        })).HasKey(x => x.Id);
+        //builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
+        builder.Property(x => x.TemperatureC).IsRequired(true);
         builder.Ignore(e => e.TemperatureF);
 
         builder.Property(t => t.Summary)

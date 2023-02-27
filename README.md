@@ -31,4 +31,12 @@ dotnet ef database update
 
 Add-Migration initial -c ApplicationDbContext -o Data/Migrations/AspNetIdentity
 Update-Database -Context ApplicationDbContext
+
+
+
+remove-migration
+add-migration v1_0 -c ApplicationDbContext -o Migrations
+Update-Database -c ApplicationDbContext
+script-migration v1_3 v1_4 -c ApplicationDbContext -o source/Services/WeatherForecast/WeatherForecast.Infrastucture/Migrations/Scripts/v1.4.0.sql -i
+
 ```

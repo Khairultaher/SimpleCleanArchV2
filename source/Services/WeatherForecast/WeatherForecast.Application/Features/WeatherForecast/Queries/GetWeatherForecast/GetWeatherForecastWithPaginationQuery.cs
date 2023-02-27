@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Janus.Application.Extensions;
 using MediatR;
 using WeatherForecast.Application.Common.Mappings;
 using WeatherForecast.Application.Extensions;
@@ -11,17 +12,17 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
 {
 
     public class GetWeatherForecastWithPaginationQuery
-        : IRequest<PaginatedList<WeatherForecastModel>>
+        : IRequest<PagedList<WeatherForecastModel>>
     {
         //public int ListId { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
+        public string OrderBy { get; set; } = "Date asc";
         public string? Location { get; set; } = null;
     }
 
     public class GetWeatherForecastWithPaginationQueryHandler
-        : IRequestHandler<GetWeatherForecastWithPaginationQuery, PaginatedList<WeatherForecastModel>>
+        : IRequestHandler<GetWeatherForecastWithPaginationQuery, PagedList<WeatherForecastModel>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -30,7 +31,7 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
             _context = context;
             _mapper = mapper;
         }
-        public async Task<PaginatedList<WeatherForecastModel>> Handle(GetWeatherForecastWithPaginationQuery request, CancellationToken cancellationToken)
+        public async Task<PagedList<WeatherForecastModel>> Handle(GetWeatherForecastWithPaginationQuery request, CancellationToken cancellationToken)
         {
             // view
             //var locationTemp = await _context
@@ -68,8 +69,10 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
                     Id = x.Id,
                     Location = x.Location,
                     Summary = x.Summary,
+                    Date= x.Date,
+                    TemperatureC= x.TemperatureC
                 })
-                .PaginatedListAsync(request.PageNumber, request.PageSize);
+                .ToPagedAsync(request.PageNumber, request.PageSize, request.OrderBy);
         }
     }
 }

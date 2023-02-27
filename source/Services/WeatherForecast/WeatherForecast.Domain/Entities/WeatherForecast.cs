@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WeatherForecast.Domain.Entities
 {
-    [Table("WeatherForecasts", Schema = "dbo")]
+    //[Table("WeatherForecasts", Schema = "dbo")]
     public class WeatherForecastEntity : AuditableEntity, IHasDomainEvent
     {
         public WeatherForecastEntity()
