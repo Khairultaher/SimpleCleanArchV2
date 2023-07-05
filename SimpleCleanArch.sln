@@ -41,7 +41,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{E69B85
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherForecast.Application.Tests", "test\WeatherForecast.Application.Tests\WeatherForecast.Application.Tests.csproj", "{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateway", "source\ApiGateway\OcelotApiGateway\OcelotApiGateway.csproj", "{069B21F0-D578-49ED-94C3-BF31A83002B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotApiGateway", "source\ApiGateway\OcelotApiGateway\OcelotApiGateway.csproj", "{069B21F0-D578-49ED-94C3-BF31A83002B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherForecast.MAUI", "source\WebApps\WeatherForecast.MAUI\WeatherForecast.MAUI.csproj", "{48319F5C-1535-46CA-A486-ECB3BFBE21CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,12 @@ Global
 		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069B21F0-D578-49ED-94C3-BF31A83002B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +133,7 @@ Global
 		{A0ADC624-8631-414A-A72C-4FB7948CEAEC} = {654A9DA6-F4E6-4F25-AD07-287556A4C81A}
 		{5D1864AF-918B-4BB2-A46B-3F7AB8267CA6} = {7702730D-F06E-42CB-B91D-F7DB73E51594}
 		{069B21F0-D578-49ED-94C3-BF31A83002B7} = {79283C8C-65B6-4DBB-A7DF-5EA7C90C849E}
+		{48319F5C-1535-46CA-A486-ECB3BFBE21CA} = {F5038296-0C29-43EB-A15C-468F575A4CEC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CCB2891-D429-44F4-96D9-CBD17CF29346}

@@ -61,12 +61,12 @@ namespace WeatherForecast.API.Controllers
                 var user = await _userManager.FindByNameAsync(vm.UserName);
                 if (user is null)
                 {
-                    return BadRequest("User not found!");
+                    return BadRequest("User not found.");
                 }
                 var singin = await _signInManager.PasswordSignInAsync(user, vm.PassWord, false, false);
                 if (!singin.Succeeded)
                 {
-                    return BadRequest("Invalid password");
+                    return BadRequest("Invalid password.");
                 }
 
                 var claims = new List<Claim>();
