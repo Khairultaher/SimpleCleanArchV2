@@ -153,6 +153,13 @@ builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+
+builder.Services.AddStackExchangeRedisCache(options => {
+    options.Configuration = "localhost:6379";
+    // options.InstanceName = "Inventory";
+});
+
+
 var app = builder.Build();
 
 
