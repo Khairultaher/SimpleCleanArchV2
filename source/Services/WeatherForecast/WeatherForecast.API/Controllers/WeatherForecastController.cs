@@ -80,11 +80,10 @@ namespace SimpleCleanArch.API.Controllers
                 var serializedData = JsonConvert.SerializeObject(data);
                 encodedData = Encoding.UTF8.GetBytes(serializedData);
 
-                //var options = new DistributedCacheEntryOptions()
-                //                .SetSlidingExpiration(TimeSpan.FromMinutes(2))
-                //                .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
-                //await _distributedCache.SetAsync(cacheKey, encodedData, options);
-                await _distributedCache.SetAsync(cacheKey, encodedData);
+                var options = new DistributedCacheEntryOptions()
+                                .SetSlidingExpiration(TimeSpan.FromMinutes(2))
+                                .SetAbsoluteExpiration(TimeSpan.FromMinutes(2));
+                await _distributedCache.SetAsync(cacheKey, encodedData, options);
 
                 return Ok(data);
             }
