@@ -156,7 +156,7 @@ builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
 
 builder.Services.AddStackExchangeRedisCache(options => {
     options.Configuration = "localhost:6379";
-    // options.InstanceName = "Inventory";
+    // options.InstanceName = "WeatherForecastApp";
 });
 
 
