@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WeatherForecast.Infrastructure.Persistence;
+using WeatherForecast.Infrastucture.Persistence;
 
 #nullable disable
 
 namespace WeatherForecast.Infrastucture.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ApplicationReadDbContext))]
     [Migration("20230227105922_v1_4")]
     partial class v1_4
     {

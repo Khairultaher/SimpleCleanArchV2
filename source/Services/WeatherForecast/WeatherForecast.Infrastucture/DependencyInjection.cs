@@ -18,6 +18,7 @@ using WeatherForecast.Infrastructure.Identity;
 using WeatherForecast.Infrastructure.Persistence;
 using WeatherForecast.Infrastructure.Security;
 using WeatherForecast.Infrastructure.Services;
+using WeatherForecast.Infrastucture.Persistence;
 
 namespace WeatherForecast.Infrastructure;
 
@@ -28,25 +29,31 @@ public static class DependencyInjection
     {
         if (configuration.GetValue<bool>("UseInMemoryDatabase"))
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationReadDbContext>(options =>
                 options.UseInMemoryDatabase("CleanArchitectureDb"));
         }
         else
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationWriteDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
-                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                    configuration.GetConnectionString("WriteConnection")!,
+                    b => b.MigrationsAssembly(typeof(ApplicationWriteDbContext).Assembly.FullName)));
+
+            services.AddDbContext<ApplicationReadDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString("ReadConnection")!,
+                    b => b.MigrationsAssembly(typeof(ApplicationReadDbContext).Assembly.FullName)));
         }
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IApplicationWriteDbContext>(provider => provider.GetRequiredService<ApplicationWriteDbContext>());
+        services.AddScoped<IApplicationReadDbContext>(provider => provider.GetRequiredService<ApplicationReadDbContext>());
 
         services.AddScoped<IDomainEventService, DomainEventService>();
 
         services
             .AddDefaultIdentity<ApplicationUser>()
             .AddRoles<ApplicationRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationWriteDbContext>();
 
 
         //services.AddIdentityServer()

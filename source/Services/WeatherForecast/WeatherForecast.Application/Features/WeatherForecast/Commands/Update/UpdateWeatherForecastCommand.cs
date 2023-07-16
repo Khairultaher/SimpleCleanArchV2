@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using WeatherForecast.Application.Exceptions;
 using WeatherForecast.Application.Interfaces.Persistence;
+using WeatherForecast.Domain.Entities;
 
 namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Update
 {
@@ -14,15 +15,15 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Update
 
     public class UpdateWeatherForecastCommandHander : IRequestHandler<UpdateWeatherForecastCommand>
     {
-        private readonly IApplicationDbContext _context;
-        public UpdateWeatherForecastCommandHander(IApplicationDbContext context)
+        private readonly IApplicationWriteDbContext _context;
+        public UpdateWeatherForecastCommandHander(IApplicationWriteDbContext context)
         {
             _context = context;
         }
 
         public async Task<Unit> Handle(UpdateWeatherForecastCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _context.WeatherForecasts.FindAsync(new object[] { request.Id }, cancellationToken);
+            WeatherForecastEntity? entity = await _context.WeatherForecasts.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (entity == null)
             {

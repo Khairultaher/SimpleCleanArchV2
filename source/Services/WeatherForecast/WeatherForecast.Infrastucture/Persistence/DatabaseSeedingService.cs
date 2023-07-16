@@ -27,7 +27,7 @@ public class DatabaseSeedingService : IHostedService
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         using var scope = _serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationWriteDbContext>();
 
         context.Database.Migrate();
 
@@ -37,7 +37,7 @@ public class DatabaseSeedingService : IHostedService
         await SeedInitialData(context, userManager, roleManager, cancellationToken);
     }
 
-    private async Task SeedInitialData(ApplicationDbContext context
+    private async Task SeedInitialData(ApplicationWriteDbContext context
         , UserManager<ApplicationUser> userManager
         , RoleManager<ApplicationRole> roleManager
         , CancellationToken cancellationToken)
@@ -81,7 +81,7 @@ public class DatabaseSeedingService : IHostedService
         }
     }
 
-    public async Task SeedSampleDataAsync(ApplicationDbContext context)
+    public async Task SeedSampleDataAsync(ApplicationWriteDbContext context)
     {
         // Seed, if necessary
         if (!context.WeatherForecasts.Any())

@@ -31,6 +31,17 @@ public interface IApplicationDbContext
     /// </summary>
     DbSet<TemperatureByLocationDto> GetTemperatureByLocation { get; }
     #endregion
-
+}
+public interface ISaveChange
+{
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+}
+
+
+public interface IApplicationWriteDbContext: IApplicationDbContext, ISaveChange
+{ 
+}
+
+public interface IApplicationReadDbContext : IApplicationDbContext
+{
 }

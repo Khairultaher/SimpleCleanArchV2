@@ -13,8 +13,6 @@ using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure;
 using WeatherForecast.Infrastructure.Middlewares;
-using WeatherForecast.Infrastucture.Middlewares;
-using static WeatherForecast.Application.Constants.AppConstants;
 #nullable disable
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,9 +53,9 @@ builder.Services.AddControllers().AddFluentValidation(c =>
 });
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo 
-    { 
-        Title = "Weather Forecast", 
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Weather Forecast",
         Version = "v1",
         TermsOfService = new Uri("https://github.com/Khairultaher"),
         Contact = new OpenApiContact
@@ -88,9 +86,9 @@ builder.Services.AddSwaggerGen(c =>
         //Description = "ApiKey must appear in header",
         //Type = SecuritySchemeType.ApiKey,    
     });
-    
+
     var securityRequirement = new OpenApiSecurityRequirement {
-        {           
+        {
             new OpenApiSecurityScheme {
                 Reference = new OpenApiReference
                 {
@@ -106,7 +104,7 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     };
-   
+
     c.AddSecurityRequirement(securityRequirement);
     c.ExampleFilters();
 
@@ -154,7 +152,8 @@ builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
 }));
 
 
-builder.Services.AddStackExchangeRedisCache(options => {
+builder.Services.AddStackExchangeRedisCache(options =>
+{
     options.Configuration = "localhost:6379";
     // options.InstanceName = "WeatherForecastApp";
 });

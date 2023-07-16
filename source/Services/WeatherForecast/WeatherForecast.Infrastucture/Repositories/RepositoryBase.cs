@@ -3,14 +3,15 @@ using System.Linq.Expressions;
 using WeatherForecast.Application.Interfaces.Repositories;
 using WeatherForecast.Domain.Common;
 using WeatherForecast.Infrastructure.Persistence;
+using WeatherForecast.Infrastucture.Persistence;
 
 namespace WeatherForecast.Infrastructure.Repositories
 {
     public class RepositoryBase<T> : IAsyncRepository<T> where T : AuditableEntity
     {
-        protected readonly ApplicationDbContext _dbContext;
+        protected readonly ApplicationReadDbContext _dbContext;
 
-        public RepositoryBase(ApplicationDbContext dbContext)
+        public RepositoryBase(ApplicationReadDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }

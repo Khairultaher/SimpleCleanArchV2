@@ -11,18 +11,18 @@ using WeatherForecast.Domain.Dtos;
 using WeatherForecast.Domain.Entities;
 using WeatherForecast.Infrastructure.Identity;
 
-namespace WeatherForecast.Infrastructure.Persistence;
+namespace WeatherForecast.Infrastucture.Persistence;
 
-public class ApplicationDbContext
+public class ApplicationReadDbContext
     //: AuthorizationDbContext<ApplicationUser, ApplicationRole, string>
     : IdentityDbContext<ApplicationUser, ApplicationRole, string>
-    , IApplicationDbContext
+    , IApplicationReadDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDomainEventService _domainEventService;
 
-    public ApplicationDbContext(
-        DbContextOptions<ApplicationDbContext> options,
+    public ApplicationReadDbContext(
+        DbContextOptions<ApplicationReadDbContext> options,
         IOptions<OperationalStoreOptions> operationalStoreOptions,
         ICurrentUserService currentUserService,
         IDomainEventService domainEventService) : base(options)
@@ -55,37 +55,6 @@ public class ApplicationDbContext
     /// </summary>
     public DbSet<TemperatureByLocationDto> GetTemperatureByLocation => Set<TemperatureByLocationDto>();
     #endregion
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-    {
-        foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    entry.Entity.CreatedBy = _currentUserService.UserId;
-                    entry.Entity.CreatedAt = DateTime.UtcNow;
-                    break;
-
-                case EntityState.Modified:
-                    entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                    entry.Entity.LastModified = DateTime.UtcNow;
-                    break;
-            }
-        }
-
-        var events = ChangeTracker.Entries<IHasDomainEvent>()
-                .Select(x => x.Entity.DomainEvents)
-                .SelectMany(x => x)
-                .Where(domainEvent => !domainEvent.IsPublished)
-                .ToArray();
-
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        await DispatchEvents(events);
-
-        return result;
-    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

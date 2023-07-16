@@ -5,13 +5,13 @@ using WeatherForecast.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using WeatherForecast.Infrastucture.Persistence;
 
 namespace WeatherForecast.Infrastructure.Repositories
 {
     public class WeatherForecastRepository : RepositoryBase<WeatherForecastEntity>, IWeatherForecastRepository
     {
-        public WeatherForecastRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public WeatherForecastRepository(ApplicationReadDbContext dbContext) : base(dbContext)
         {
         }
 

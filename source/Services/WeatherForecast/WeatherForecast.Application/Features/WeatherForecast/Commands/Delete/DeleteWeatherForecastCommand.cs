@@ -11,8 +11,8 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Delete
     }
     public class DeleteWeatherForecastCommandHandler : IRequestHandler<DeleteWeatherForecastCommand>
     {
-        private readonly IApplicationDbContext _context;
-        public DeleteWeatherForecastCommandHandler(IApplicationDbContext context)
+        private readonly IApplicationWriteDbContext _context;
+        public DeleteWeatherForecastCommandHandler(IApplicationWriteDbContext context)
         {
             _context = context;
         }
