@@ -24,9 +24,9 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
     public class GetWeatherForecastWithPaginationQueryHandler
         : IRequestHandler<GetWeatherForecastWithPaginationQuery, PagedList<WeatherForecastModel>>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationReadDbContext _context;
         private readonly IMapper _mapper;
-        public GetWeatherForecastWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetWeatherForecastWithPaginationQueryHandler(IApplicationReadDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
