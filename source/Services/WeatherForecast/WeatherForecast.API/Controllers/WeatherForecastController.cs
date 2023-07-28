@@ -1,23 +1,18 @@
+using EventBus.Common;
+using EventBus.Events;
+using Janus.Application.Extensions;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
+using System.Text;
 using WeatherForecast.API.Controllers;
-using WeatherForecast.Application.Extensions;
-using WeatherForecast.Application.Models;
 using WeatherForecast.Application.Features.WeatherForecast.Commands.Create;
 using WeatherForecast.Application.Features.WeatherForecast.Commands.Delete;
 using WeatherForecast.Application.Features.WeatherForecast.Commands.Update;
 using WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeatherForecast;
 using WeatherForecast.Application.WeatherForecasts.Queries.GetWeatherForecast;
-using MassTransit;
-using EventBus.Events;
-using System.Net;
-using EventBus.Common;
-using Swashbuckle.AspNetCore.Filters;
-using WeatherForecast.API.ExampleModels;
-using Janus.Application.Extensions;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using System.Text;
 
 namespace SimpleCleanArch.API.Controllers
 {
@@ -26,10 +21,6 @@ namespace SimpleCleanArch.API.Controllers
     [ApiExplorerSettings(GroupName = "WF", IgnoreApi = false)]
     public class WeatherForecastController : BaseController
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };      
         private readonly ILogger<WeatherForecastController> _logger;
         readonly IPublishEndpoint _publishEndpoint;
         private readonly IDistributedCache _distributedCache;
@@ -65,7 +56,7 @@ namespace SimpleCleanArch.API.Controllers
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
         public async Task<ActionResult<PagedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
-        {          
+        {
             var encodedData = await _distributedCache.GetAsync(cacheKey);
             if (encodedData != null)
             {
