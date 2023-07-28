@@ -15,7 +15,7 @@ namespace WeatherForecast.Application.Tests
 {
     public class CreateWeatherForecastCommandHandlerTest
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationWriteDbContext _context;
         private readonly IMapper _mapper;
         public CreateWeatherForecastCommandHandlerTest()
         {
@@ -25,7 +25,7 @@ namespace WeatherForecast.Application.Tests
             });
             _mapper = mapperConfig.CreateMapper();
 
-            var mockContext = new Mock<IApplicationDbContext>();
+            var mockContext = new Mock<IApplicationWriteDbContext>();
             IQueryable<WeatherForecastEntity> moqWeatherForecasts = new List<WeatherForecastEntity>
             {
                 new WeatherForecastEntity {Id = 1, Date= DateTime.Now, Location = "dhaka", Summary="cold"},

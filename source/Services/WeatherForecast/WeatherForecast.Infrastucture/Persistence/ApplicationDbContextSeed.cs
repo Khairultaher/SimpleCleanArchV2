@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WeatherForecast.Infrastructure.Persistence;
 
 namespace WeatherForecast.Infrastructure.Persistence;
 
@@ -30,7 +29,7 @@ public class ApplicationDbContextSeed
         }
     }
 
-    public async Task SeedSampleDataAsync(ApplicationDbContext context)
+    public async Task SeedSampleDataAsync(ApplicationWriteDbContext context)
     {
         // Seed, if necessary
         if (!context.WeatherForecasts.Any())

@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WeatherForecast.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WeatherForecast.Infrastructure.Persistence.Configurations;
 
@@ -19,7 +14,7 @@ public class WeatherForecastConfiguration : IEntityTypeConfiguration<WeatherFore
             ttb.HasPeriodEnd("ValidTo");
             ttb.UseHistoryTable("WeatherForecastsHistory", "dbo");
         })).HasKey(x => x.Id);
-        //builder.HasKey(x => x.Id);
+
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
         builder.Property(x => x.TemperatureC).IsRequired(true);

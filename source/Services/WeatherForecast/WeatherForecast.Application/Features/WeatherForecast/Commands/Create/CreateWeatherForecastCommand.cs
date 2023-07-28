@@ -14,8 +14,8 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Commands.Create
 
     public class CreateWeatherForecastCommandHandler : IRequestHandler<CreateWeatherForecastCommand, int>
     {
-        private readonly IApplicationDbContext _context;
-        public CreateWeatherForecastCommandHandler(IApplicationDbContext context)
+        private readonly IApplicationWriteDbContext _context;
+        public CreateWeatherForecastCommandHandler(IApplicationWriteDbContext context)
         {
             _context = context;
         }
