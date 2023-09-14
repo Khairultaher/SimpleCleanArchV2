@@ -12,7 +12,7 @@ namespace WeatherForecast.Application.Tests
 {
     public class GetWeatherForecastWithPaginationQueryHandlerTest
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IApplicationReadDbContext _context;
         private readonly IMapper _mapper;
         public GetWeatherForecastWithPaginationQueryHandlerTest()
         {
@@ -56,7 +56,7 @@ namespace WeatherForecast.Application.Tests
                 .Returns((IEnumerator<WeatherForecastEntity>)moqWeatherForecasts.GetEnumerator());
 
             mockContext.Setup(c => c.WeatherForecasts).Returns(mockDbSet.Object);
-            _context = mockContext.Object;
+            _context = (IApplicationReadDbContext?)mockContext.Object;
         }
 
         [Fact]
