@@ -34,9 +34,9 @@ Update-Database -Context ApplicationDbContext
 
 
 
-remove-migration
-add-migration v1_0 -c ApplicationDbContext -o Migrations
-Update-Database -c ApplicationDbContext
+remove-migration -Context ApplicationWriteDbContext
+add-migration v1_0 -Context ApplicationWriteDbContext -o Migrations
+Update-Database -Context ApplicationWriteDbContext
 script-migration v1_3 v1_4 -c ApplicationDbContext -o source/Services/WeatherForecast/WeatherForecast.Infrastucture/Migrations/Scripts/v1.4.0.sql -i
 
 ```
