@@ -11,25 +11,26 @@ public interface IApplicationDbContext
     #region TABLES
     DbSet<WeatherForecastEntity> WeatherForecasts { get; }
     #endregion
+
     #region VIEWS
     /// <summary>
     /// vwLocationTemperatureSummery
     /// </summary>
-    DbSet<LocationTemperatureSummeryDto> LocationTemperatureSummery { get; }
+    //DbSet<LocationTemperatureSummeryDto> LocationTemperatureSummery { get; }
     #endregion
 
     #region PROCEDURES
     /// <summary>
     /// spGetWeatherInformation()
     /// </summary>
-    DbSet<WeatherInformationDto> GetWeatherInformation { get; }
+    //DbSet<WeatherInformationDto> GetWeatherInformation { get; }
     #endregion
 
     #region FUNCTIONS
     /// <summary>
     /// spGetTemperatureByLocation(@location nvarchar(50))
     /// </summary>
-    DbSet<TemperatureByLocationDto> GetTemperatureByLocation { get; }
+    //DbSet<TemperatureByLocationDto> GetTemperatureByLocation { get; }
     #endregion
 }
 public interface ISaveChange

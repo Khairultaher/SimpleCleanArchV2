@@ -12,6 +12,7 @@ using WeatherForecast.Application;
 using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure;
+using WeatherForecast.Infrastructure.Identity;
 using WeatherForecast.Infrastructure.Middlewares;
 #nullable disable
 
@@ -43,7 +44,7 @@ builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddEndpointsApiExplorer();
+
 
 builder.Services.AddControllers().AddFluentValidation(c =>
 {
@@ -51,6 +52,8 @@ builder.Services.AddControllers().AddFluentValidation(c =>
     // Optionally set validator factory if you have problems with scope resolve inside validators.
     c.ValidatorFactoryType = typeof(HttpContextServiceProviderValidatorFactory);
 });
+
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -113,32 +116,32 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(xmlPath);
 
     // group controllers
-    c.TagActionsBy(api =>
-    {
-        if (api.GroupName != null)
-        {
-            if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDes)
-            {
-                if (controllerActionDes.ControllerName == "Demographic")
-                {
-                    return new[] { api.GroupName + ": " + controllerActionDes.ControllerName + "/Subject" };
-                }
-                return new[] { api.GroupName + ": " + controllerActionDes.ControllerName };
-            }
-            //return new[] { api.GroupName };
-        }
+    //c.TagActionsBy(api =>
+    //{
+    //    if (api.GroupName != null)
+    //    {
+    //        if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDes)
+    //        {
+    //            if (controllerActionDes.ControllerName == "WeatherForecast")
+    //            {
+    //                return new[] { api.GroupName + ": " + controllerActionDes.ControllerName + "/WeatherForecast" };
+    //            }
+    //            return new[] { api.GroupName + ": " + controllerActionDes.ControllerName };
+    //        }
+    //        //return new[] { api.GroupName };
+    //    }
 
-        if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
-        {
-            if (controllerActionDescriptor.ControllerName == "Demographic")
-            {
-                return new[] { controllerActionDescriptor.ControllerName + "/Subject" };
-            }
-            return new[] { controllerActionDescriptor.ControllerName };
-        }
+    //    if (api.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+    //    {
+    //        if (controllerActionDescriptor.ControllerName == "WeatherForecast")
+    //        {
+    //            return new[] { controllerActionDescriptor.ControllerName + "/WeatherForecast" };
+    //        }
+    //        return new[] { controllerActionDescriptor.ControllerName };
+    //    }
 
-        throw new InvalidOperationException("Unable to determine tag for endpoint.");
-    });
+    //    throw new InvalidOperationException("Unable to determine tag for endpoint.");
+    //});
 
     c.DocInclusionPredicate((name, api) => true);
 });
@@ -186,6 +189,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapGroup("/account").MapIdentityApi<ApplicationUser>();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
