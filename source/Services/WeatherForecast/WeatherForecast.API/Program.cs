@@ -58,7 +58,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Weather Forecast",
+        Title = "Weather Forecast— .NET 8",
         Version = "v1",
         TermsOfService = new Uri("https://github.com/Khairultaher"),
         Contact = new OpenApiContact
