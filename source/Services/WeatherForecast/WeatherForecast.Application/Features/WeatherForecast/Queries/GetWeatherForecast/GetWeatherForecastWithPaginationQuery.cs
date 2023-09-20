@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Janus.Application.Extensions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using WeatherForecast.Application.Extensions;
 using WeatherForecast.Application.Interfaces.Persistence;
@@ -22,8 +23,8 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
     public class GetWeatherForecastWithPaginationQueryHandler
         : IRequestHandler<GetWeatherForecastWithPaginationQuery, PagedList<WeatherForecastModel>>
     {
-        private readonly IApplicationReadDbContext _context;
-        public GetWeatherForecastWithPaginationQueryHandler(IApplicationReadDbContext context, IMapper mapper)
+        private readonly IApplicationWriteDbContext _context;
+        public GetWeatherForecastWithPaginationQueryHandler(IApplicationWriteDbContext context, IMapper mapper)
         {
             _context = context;
         }
@@ -55,6 +56,8 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
             {
                 predicate = predicate.And(i => i.Location!.ToLower() == request.Location.ToLower());
             }
+
+
 
             return await _context.WeatherForecasts
                 .Where(predicate)

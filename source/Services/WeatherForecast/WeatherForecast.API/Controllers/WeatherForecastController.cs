@@ -101,7 +101,7 @@ namespace SimpleCleanArch.API.Controllers
         /// <response code="401">Failed/Unauthorized</response>
         [HttpGet]
         [Route("GetWeatherForecast")]
-        [Authorize(policy: "Admin")]
+        //[Authorize(policy: "Admin")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesDefaultResponseType]
         public async Task<ActionResult<PagedList<WeatherForecastModel>>> GetWeatherForecastWithPagination([FromQuery] int pageNumber, int pageSize, string orderBy)
