@@ -33,6 +33,7 @@ AppConstants.JwtSettings.SigningKey = configuration["JwtSettings:SigningKey"];
 EventBusConstants.RabbitMQSettings.Host = configuration["RabbitMQSettings:Host"];
 EventBusConstants.RabbitMQSettings.HostAddress = configuration["RabbitMQSettings:HostAddress"];
 AppConstants.ServiceSettings.ServiceName = configuration["ServiceSettings:ServiceName"];
+AppConstants.RedisConnection = configuration["RedisConnection"];
 #endregion
 
 
@@ -157,7 +158,8 @@ builder.Services.AddCors(p => p.AddPolicy("cors", builder =>
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = "localhost:6379";
+    options.Configuration = AppConstants.RedisConnection;
+    //options.Configuration = "host.docker.internal:6379";
     // options.InstanceName = "WeatherForecastApp";
 });
 

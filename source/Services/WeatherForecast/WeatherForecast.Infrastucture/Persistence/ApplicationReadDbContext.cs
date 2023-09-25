@@ -11,7 +11,7 @@ using WeatherForecast.Domain.Dtos;
 using WeatherForecast.Domain.Entities;
 using WeatherForecast.Infrastructure.Identity;
 
-namespace WeatherForecast.Infrastucture.Persistence;
+namespace WeatherForecast.Infrastructure.Persistence;
 
 public class ApplicationReadDbContext
     //: AuthorizationDbContext<ApplicationUser, ApplicationRole, string>

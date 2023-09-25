@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  redis:
+   image: redis:alpine3.16
+
+  # rabbitmq:
+  #   image: rabbitmq:3-management-alpine
+
+  # weatherforecastdb:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+
+  weatherforecast.api:
+    image: ${DOCKER_REGISTRY-}weatherforecastapi
+    build:
+      context: .
+      dockerfile: Services/WeatherForecast/WeatherForecast.API/Dockerfile
+
+volumes:
+  redis:
+  # sqlserver:
+  # rabbitmq:
+    
+
+networks:
+ custom-default-network:
+   external: false
+   name: custom-default-network

@@ -5,7 +5,7 @@ using WeatherForecast.Infrastructure.Persistence;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WeatherForecast.Infrastucture.Persistence;
+using WeatherForecast.Infrastructure.Persistence;
 
 namespace WeatherForecast.Infrastructure.Repositories
 {

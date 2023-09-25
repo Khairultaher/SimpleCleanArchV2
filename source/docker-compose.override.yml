@@ -1,0 +1,50 @@
+version: '3.4'
+
+services:
+  redis:
+    container_name: redis
+    restart: always
+    ports:
+        - "6380:6379"
+    volumes:
+      - redis:/var/lib/redis
+
+  # rabbitmq:
+  #   container_name: rabbitmq
+  #   restart: always
+  #   ports:
+  #       - "5672:5672"
+  #       - "15672:15672"
+  #   volumes:
+  #     - rabbitmq:/var/lib/rabbitmq
+
+  # weatherforecastdb:
+  #   container_name: weatherforecastdb
+  #   environment:
+  #     - MSSQL_PID=Developer
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=SA@12345
+  #   restart: always
+  #   ports:
+  #       - "1434:1433"
+  #   volumes:
+  #     - sqlserver:/var/lib/mssql/data
+
+  weatherforecast.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - RedisConnection=redis
+      # - "ConnectionStrings:DefaultConnection=Server=weatherforecastdb;Database=WeatherForecastDb;User Id=sa;Password=sa@123"   
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=1234
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - redis
+      # - weatherforecastdb
+      # - rabbitmq
+    ports:
+      - "5051:80"
+      - "7071:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
+      # - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

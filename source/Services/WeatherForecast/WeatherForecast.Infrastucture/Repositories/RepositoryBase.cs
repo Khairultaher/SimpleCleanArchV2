@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using WeatherForecast.Application.Interfaces.Repositories;
 using WeatherForecast.Domain.Common;
 using WeatherForecast.Infrastructure.Persistence;
-using WeatherForecast.Infrastucture.Persistence;
+using WeatherForecast.Infrastructure.Persistence;
 
 namespace WeatherForecast.Infrastructure.Repositories
 {

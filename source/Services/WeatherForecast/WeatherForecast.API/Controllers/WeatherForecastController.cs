@@ -24,7 +24,7 @@ namespace SimpleCleanArch.API.Controllers
         private readonly ILogger<WeatherForecastController> _logger;
         readonly IPublishEndpoint _publishEndpoint;
         private readonly IDistributedCache _distributedCache;
-        private const string cacheKey = "weatherforecast-get-1";
+        private const string cacheKey = "weatherforecast-get";
         public WeatherForecastController(ILogger<WeatherForecastController> logger
             , IPublishEndpoint publishEndpoint, IDistributedCache distributedCache
             )
@@ -57,7 +57,7 @@ namespace SimpleCleanArch.API.Controllers
         //[ProducesDefaultResponseType]
         public async Task<ActionResult<PagedList<WeatherForecastModel>>> Get([FromQuery] GetWeatherForecastWithPaginationQuery query)
         {
-            var encodedData = await _distributedCache.GetAsync(cacheKey);
+            var encodedData = await _distributedCache.GetAsync($"{cacheKey}-{query.PageNumber}");
             if (encodedData != null)
             {
                 var serializedBooks = Encoding.UTF8.GetString(encodedData);
@@ -74,7 +74,7 @@ namespace SimpleCleanArch.API.Controllers
                 var options = new DistributedCacheEntryOptions()
                                 .SetSlidingExpiration(TimeSpan.FromMinutes(2))
                                 .SetAbsoluteExpiration(TimeSpan.FromMinutes(6));
-                await _distributedCache.SetAsync(cacheKey, encodedData, options);
+                await _distributedCache.SetAsync($"{cacheKey}-{query.PageNumber}", encodedData, options);
 
                 return Ok(data);
             }

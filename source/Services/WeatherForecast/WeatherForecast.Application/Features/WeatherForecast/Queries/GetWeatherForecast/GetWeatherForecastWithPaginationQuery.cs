@@ -16,15 +16,15 @@ namespace WeatherForecast.Application.Features.WeatherForecast.Queries.GetWeathe
     {
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-        public string OrderBy { get; set; } = "Date asc";
+        public string OrderBy { get; set; } = "Location asc";
         public string? Location { get; set; } = null;
     }
 
     public class GetWeatherForecastWithPaginationQueryHandler
         : IRequestHandler<GetWeatherForecastWithPaginationQuery, PagedList<WeatherForecastModel>>
     {
-        private readonly IApplicationWriteDbContext _context;
-        public GetWeatherForecastWithPaginationQueryHandler(IApplicationWriteDbContext context, IMapper mapper)
+        private readonly IApplicationReadDbContext _context;
+        public GetWeatherForecastWithPaginationQueryHandler(IApplicationReadDbContext context, IMapper mapper)
         {
             _context = context;
         }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WeatherForecast.Infrastucture.Middlewares
+namespace WeatherForecast.Infrastructure.Middleware
 {
     public class ApiKeyAuthMiddleware
     {

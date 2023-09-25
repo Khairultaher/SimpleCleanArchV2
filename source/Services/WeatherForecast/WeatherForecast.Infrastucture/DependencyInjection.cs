@@ -18,7 +18,7 @@ using WeatherForecast.Infrastructure.Identity;
 using WeatherForecast.Infrastructure.Persistence;
 using WeatherForecast.Infrastructure.Security;
 using WeatherForecast.Infrastructure.Services;
-using WeatherForecast.Infrastucture.Persistence;
+using WeatherForecast.Infrastructure.Persistence;
 
 namespace WeatherForecast.Infrastructure;
 

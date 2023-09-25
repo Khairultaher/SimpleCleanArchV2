@@ -13,6 +13,7 @@ namespace WeatherForecast.Application.Constants
         public static string LongDateFormat = "yyyy-MM-dd hh:mm tt";
         public static string FiscalYearClaimName = "FY";
         public static string ConnectionString = "";
+        public static string RedisConnection = "";
 
         public static class EmailSetup
         {
