@@ -13,6 +13,7 @@ using WeatherForecast.Application.Constants;
 using WeatherForecast.Application.Services;
 using WeatherForecast.Infrastructure;
 using WeatherForecast.Infrastructure.Identity;
+using WeatherForecast.Infrastructure.Middleware;
 using WeatherForecast.Infrastructure.Middlewares;
 #nullable disable
 
@@ -74,21 +75,41 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://github.com/Khairultaher"),
         }
     });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme()
     {
+
+        // For JWT Bearer
+        //Name = "Authorization",
+        //Scheme = "Bearer",
+        //BearerFormat = "JWT",
+        //Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+
+
+        // For ApiKey Auth
+        Name = "ApiKey",
+        Scheme = "ApiKeyScheme",
+        Description = "ApiKey must appear in header",
+
         In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+    });
+    c.AddSecurityDefinition("BearerToken", new OpenApiSecurityScheme()
+    {
+
         // For JWT Bearer
         Name = "Authorization",
         Scheme = "Bearer",
-        BearerFormat = "JWT",
+        //BearerFormat = "JWT",
         Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
-        Type = SecuritySchemeType.Http,
+
 
         // For ApiKey Auth
         //Name = "ApiKey",
         //Scheme = "ApiKeyScheme",
         //Description = "ApiKey must appear in header",
-        //Type = SecuritySchemeType.ApiKey,    
+
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
     });
 
     var securityRequirement = new OpenApiSecurityRequirement {
@@ -98,13 +119,30 @@ builder.Services.AddSwaggerGen(c =>
                 {
                     Type = ReferenceType.SecurityScheme,
                     // For JWT Bearer
-                    Id = "Bearer"
+                    //Id = "Bearer"
+
+                    //For ApiKey Auth
+                    Id = "ApiKey"
+                },
+                In = ParameterLocation.Header
+            },
+
+            new string[] {}
+        },
+          {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    // For JWT Bearer
+                    Id = "BearerToken"
 
                     //For ApiKey Auth
                     //Id = "ApiKey"
                 },
                 In = ParameterLocation.Header
             },
+
             new string[] {}
         }
     };
@@ -183,11 +221,11 @@ if (app.Environment.IsDevelopment())
 
 // custom middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-//app.UseMiddleware<ApiKeyAuthMiddleware>(); // when use api key
 app.UseCors("cors");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseMiddleware<ApiKeyAuthMiddleware>(); // when use api key
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
